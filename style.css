@@ -9,7 +9,7 @@ body {
     color: white;
 }
 
-/* ✅ Фон видеосын дұрыстау */
+/* ✅ Фон видеосы */
 .video-bg {
     position: fixed;
     top: 0;
@@ -32,4 +32,37 @@ button {
 
 button:hover {
     transform: scale(1.1);
+}
+
+/* ✅ Лидерлер таблицасы */
+table {
+    width: 50%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid white;
+}
+
+/* ✅ "Қызыл жарық, жасыл жарық" ойыны */
+#game-container {
+    margin-top: 20px;
+    background: rgba(255, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#light-status {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#move-button {
+    background-color: green;
+    padding: 10px 20px;
+    font-size: 18px;
+    margin-top: 10px;
 }
