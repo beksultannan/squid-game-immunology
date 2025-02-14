@@ -4,57 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Squid Game: Immunology</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: black;
-            color: white;
-        }
-        .container {
-            margin-top: 100px;
-        }
-        input, button {
-            padding: 10px;
-            margin: 10px;
-            font-size: 18px;
-        }
-        .hidden {
-            display: none;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <audio autoplay loop>
-        <source src="squid-game-music.mp3" type="audio/mp3">
+
+    <!-- 🎮 Ойын атауы -->
+    <h1>Squid Game: Immunology</h1>
+
+    <!-- 🎵 Дыбыстық эффект қосу -->
+    <button id="audio-control">🎵 Музыка</button>
+    <audio id="game-music" loop>
+        <source src="round-and-round.mp3" type="audio/mpeg">
     </audio>
 
-    <div class="container">
-        <h1>🦑 Squid Game: Immunology</h1>
-        <p>Ойынға қатысу үшін төмендегі батырманы басыңыз.</p>
-        
-        <input type="text" id="playerName" placeholder="Атыңызды енгізіңіз">
-        <button onclick="registerPlayer()">Тіркелу</button>
-        <button onclick="startGame()" class="hidden" id="startBtn">Ойынды бастау</button>
-        
-        <p id="playerList"></p>
+    <!-- 🔺 Логотип -->
+    <div class="logo-container">
+        <img src="squid-game-logo.png" class="logo">
     </div>
 
+    <!-- 🔘 Ойынға қатысу батырмасы -->
+    <button onclick="startGame()">Ойынды бастау</button>
+
+    <!-- 🎥 Фон видеосы -->
+    <video class="video-bg" autoplay loop muted>
+        <source src="squid-game-bg.mp4" type="video/mp4">
+    </video>
+
     <script>
-        let players = [];
-
-        function registerPlayer() {
-            let name = document.getElementById("playerName").value;
-            if (name.trim() !== "") {
-                players.push(name);
-                document.getElementById("playerList").innerText = "Қатысушылар: " + players.join(", ");
-                document.getElementById("startBtn").classList.remove("hidden");
+        // 🎵 Музыканы қосу / тоқтату
+        document.getElementById('audio-control').addEventListener('click', function() {
+            var music = document.getElementById('game-music');
+            if (music.paused) {
+                music.play();
+                this.innerText = '🔇 Музыканы өшіру';
+            } else {
+                music.pause();
+                this.innerText = '🎵 Музыка';
             }
-        }
+        });
 
+        // 🎮 Ойынды бастау
         function startGame() {
-            window.location.href = "game.html"; // Келесі ойын бетіне өтеді
+            alert('Ойын басталды!');
         }
     </script>
+
 </body>
 </html>
