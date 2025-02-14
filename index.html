@@ -8,27 +8,26 @@
 </head>
 <body>
 
-    <!-- 🎮 Ойын атауы -->
     <h1>Squid Game: Immunology</h1>
 
-    <!-- 🎵 Музыканы қосу батырмасы -->
+    <!-- Музыканы қосу батырмасы -->
     <button id="audio-control">🎵 Музыка</button>
     <audio id="game-music" loop>
         <source src="round-and-round.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- 🔺 Логотип -->
+    <!-- Логотип -->
     <div class="logo-container">
         <img src="squid-game-logo.png" class="logo">
     </div>
 
-    <!-- 👤 Тіркелу формасы -->
+    <!-- Тіркелу формасы -->
     <div id="register">
         <input type="text" id="playerName" placeholder="Атыңызды енгізіңіз">
         <button onclick="registerPlayer()">Тіркелу</button>
     </div>
 
-    <!-- 📋 Лидерлер таблицасы -->
+    <!-- Лидерлер таблицасы -->
     <h2>Лидерлер:</h2>
     <table id="leaderboard">
         <tr>
@@ -38,7 +37,14 @@
         </tr>
     </table>
 
-    <!-- 🎥 Фон видеосы -->
+    <!-- "Қызыл жарық, жасыл жарық" ойыны -->
+    <div id="game-container">
+        <h2>🚦 "Қызыл жарық, жасыл жарық" ойыны</h2>
+        <h3 id="light-status">🔴 Қызыл жарық</h3>
+        <button id="move-button" onclick="run()">Жүгіру</button>
+    </div>
+
+    <!-- Фон видеосы -->
     <video class="video-bg" autoplay loop muted playsinline>
         <source src="squid-game-bg.mp4" type="video/mp4">
     </video>
