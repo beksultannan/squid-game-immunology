@@ -3,104 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Squid Game Immunology</title>
+    <title>Squid Game: Immunology</title>
     <style>
         body {
-            background-color: #111;
-            color: white;
             font-family: Arial, sans-serif;
             text-align: center;
-            margin: 0;
-            padding: 0;
-            background-image: url('https://example.com/squid-game-bg.jpg');
-            background-size: cover;
-            background-position: center;
+            background-color: black;
+            color: white;
         }
         .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
+            margin-top: 100px;
         }
-        h1 {
-            font-size: 3rem;
-            color: #ff0066;
-            text-shadow: 2px 2px 10px rgba(255, 0, 102, 0.8);
-        }
-        .game-button {
-            background-color: #ff0066;
-            border: none;
-            padding: 15px 30px;
-            font-size: 1.5rem;
-            color: white;
-            cursor: pointer;
-            border-radius: 10px;
-            margin-top: 20px;
-            box-shadow: 0px 0px 10px rgba(255, 0, 102, 0.8);
-            transition: transform 0.2s;
-        }
-        .game-button:hover {
-            background-color: #cc0052;
-            transform: scale(1.1);
-        }
-        .player-form {
-            margin-top: 20px;
-        }
-        .player-form input {
+        input, button {
             padding: 10px;
-            font-size: 1rem;
-            border-radius: 5px;
-            border: none;
-            margin-right: 10px;
+            margin: 10px;
+            font-size: 18px;
         }
-        .player-form button {
-            background-color: #ff0066;
-            border: none;
-            padding: 10px 20px;
-            font-size: 1rem;
-            color: white;
-            cursor: pointer;
-            border-radius: 5px;
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <audio id="background-music" autoplay loop>
-        <source src="https://example.com/squid-game-theme.mp3" type="audio/mp3">
-        Сіздің браузеріңіз аудио ойната алмайды.
+    <audio autoplay loop>
+        <source src="squid-game-music.mp3" type="audio/mp3">
     </audio>
-    
+
     <div class="container">
-        <h1>Squid Game: Immunology</h1>
+        <h1>🦑 Squid Game: Immunology</h1>
         <p>Ойынға қатысу үшін төмендегі батырманы басыңыз.</p>
         
-        <form class="player-form" onsubmit="registerPlayer(event)">
-            <input type="text" id="player-name" placeholder="Атыңызды енгізіңіз" required>
-            <button type="submit">Тіркелу</button>
-        </form>
-
-        <button class="game-button" onclick="startGame()">Ойынды бастау</button>
+        <input type="text" id="playerName" placeholder="Атыңызды енгізіңіз">
+        <button onclick="registerPlayer()">Тіркелу</button>
+        <button onclick="startGame()" class="hidden" id="startBtn">Ойынды бастау</button>
+        
+        <p id="playerList"></p>
     </div>
-    
+
     <script>
-        function registerPlayer(event) {
-            event.preventDefault();
-            const playerName = document.getElementById("player-name").value;
-            if (playerName) {
-                alert(playerName + " тіркелді!");
+        let players = [];
+
+        function registerPlayer() {
+            let name = document.getElementById("playerName").value;
+            if (name.trim() !== "") {
+                players.push(name);
+                document.getElementById("playerList").innerText = "Қатысушылар: " + players.join(", ");
+                document.getElementById("startBtn").classList.remove("hidden");
             }
         }
-        
+
         function startGame() {
-            alert("Ойын жақында басталады!");
-            changeMusic('https://example.com/squid-game-round1.mp3');
-        }
-        
-        function changeMusic(musicUrl) {
-            const audio = document.getElementById("background-music");
-            audio.src = musicUrl;
-            audio.play();
+            window.location.href = "game.html"; // Келесі ойын бетіне өтеді
         }
     </script>
 </body>
