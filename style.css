@@ -1,13 +1,15 @@
 /* ✅ Squid Game шрифтін қосу */
-@import url('https://fonts.googleapis.com/css2?family=Gasoek+One&display=swap');
+@font-face {
+    font-family: 'SquidGameFont';
+    src: url('fonts/SquidIgra.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
 
 body {
-    font-family: 'Gasoek One', sans-serif;
-    text-transform: uppercase;
-    text-align: center;
-    background-color: black;
-    color: white;
+    font-family: 'SquidGameFont', sans-serif;
 }
+
 
 /* ✅ Фон видеосы */
 .video-bg {
