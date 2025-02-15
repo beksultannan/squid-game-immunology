@@ -37,18 +37,17 @@
     </div>
 
     <script>
-        function registerPlayer() {
-            let playerName = prompt("Атыңызды енгізіңіз:");
-            if (playerName) {
-                let players = JSON.parse(localStorage.getItem("players")) || [];
-                if (!players.includes(playerName)) {
-                    players.push(playerName);
-                    localStorage.setItem("players", JSON.stringify(players));
-                }
+    function registerPlayer() {
+    let playerName = prompt("Атыңызды енгізіңіз:");
+    if (playerName) {
+        localStorage.setItem("playerName", playerName);
+        
+        // Ойыншылар тізімін жаңарту
+        let players = JSON.parse(localStorage.getItem("players")) || [];
+        players.push({ name: playerName, status: "Күтуде ⏳" });
+        localStorage.setItem("players", JSON.stringify(players));
 
-                localStorage.setItem("playerName", playerName);
-                alert("Тіркелдіңіз: " + playerName);
-                
+        alert("Тіркелдіңіз: " + playerName);
                 // Ойын емес, күту парағына жібереді
                 window.location.href = "waiting.html";
             }
