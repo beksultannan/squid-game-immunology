@@ -42,27 +42,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function checkResult() {
-        let playerName = localStorage.getItem("playerName");
-        let players = JSON.parse(localStorage.getItem("players")) || [];
-        let winners = JSON.parse(localStorage.getItem("winners_round1")) || [];
-
         if (correctAnswers >= 2) {
             resultText.textContent = `🔥 Құттықтаймыз! Сіз ${correctAnswers}/5 дұрыс жауап бердіңіз және келесі кезеңге өттіңіз!`;
-
-            winners.push({ name: playerName, status: "Келесі раундқа өтті ✅" });
-            localStorage.setItem("winners_round1", JSON.stringify(winners));
         } else {
             resultText.textContent = `❌ Сіз тек ${correctAnswers}/5 дұрыс жауап бердіңіз. Ойыннан шығарылдыңыз.`;
         }
-
-        players = players.map(player => {
-            if (player.name === playerName) {
-                return { ...player, status: correctAnswers >= 2 ? "Келесі раундқа өтті ✅" : "Шығарылды ❌" };
-            }
-            return player;
-        });
-
-        localStorage.setItem("players", JSON.stringify(players));
 
         trueButton.style.display = "none";
         falseButton.style.display = "none";
