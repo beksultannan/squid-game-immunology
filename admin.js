@@ -14,6 +14,7 @@ function loadPlayers() {
     });
 }
 
+
 function startGame() {
     localStorage.setItem("gameStatus", "started");
     alert("Ойын басталды!");
