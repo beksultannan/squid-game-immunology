@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тапсырмалар - Squid Game: Immunology</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gasoek+One&display=swap">
+  <style>
+    /* tasks.html-ге арналған қосымша стильдер */
+    #task-area {
+      margin: 20px auto;
+      width: 80%;
+      background: rgba(255, 0, 0, 0.8);
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .task {
+      margin-bottom: 20px;
+    }
+    .task h2 {
+      margin-top: 0;
+    }
+    input[type="text"] {
+      padding: 10px;
+      font-size: 18px;
+      margin: 10px;
+      border: 2px solid white;
+      border-radius: 5px;
+      background: transparent;
+      color: white;
+      width: 200px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: red;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin: 10px;
+      transition: transform 0.2s;
+    }
+    button:hover {
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <h1>Тапсырмалар</h1>
+  <div id="task-area">
+    <!-- Раунд 1: Тапсырма -->
+    <div class="task" id="task1">
+      <h2>Раунд 1: Иммундық Пазл</h2>
+      <p>Төмендегі элементтерді дұрыс ретпен орналастырыңыз (мысалы, 1,2,3,4):</p>
+      <p>1) Аллоантигендерді тану<br>2) Т-лимфоциттердің белсенуі<br>3) Цитокиндердің бөлінуі<br>4) Трансплантаттың қабылданбауы</p>
+      <input type="text" id="answer1" placeholder="Жауапты енгізіңіз">
+      <button onclick="checkTask1()">Жауап беру</button>
+    </div>
+    <!-- Мұнда келесі тапсырмалар да болуы мүмкін -->
+  </div>
+  
+  <script>
+    function checkTask1() {
+      const userAnswer = document.getElementById('answer1').value.trim();
+      // Дұрыс жауап үлгісі: элементтердің дұрыс реті 1,2,3,4
+      const correctAnswer = "1,2,3,4";
+      if (userAnswer === correctAnswer) {
+        alert("Дұрыс жауап! Келесі тапсырмаға өтесіз.");
+        // Мысалы, келесі тапсырманы көрсету немесе ағымдағы тапсырманы жасыру:
+        document.getElementById('task1').style.display = "none";
+        // Мұнда келесі тапсырмаға өту логикасын қосуға болады.
+      } else {
+        alert("Қате жауап! Сіз ойыннан шығарылды.");
+        // Ойыннан шығару: мысалы, ойыншыны «eliminated.html» бетіне бағыттаймыз.
+        window.location.href = "eliminated.html";
+      }
+    }
+  </script>
+</body>
+</html>
