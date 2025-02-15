@@ -3,12 +3,13 @@ document.addEventListener("DOMContentLoaded", loadPlayers);
 function loadPlayers() {
     let players = JSON.parse(localStorage.getItem("players")) || [];
     let playersTable = document.getElementById("players-list");
-    playersTable.innerHTML = "";
+    playersTable.innerHTML = ""; 
+
     players.forEach((player, index) => {
         let row = `<tr>
             <td>${index + 1}</td>
-            <td>${player.name}</td>
-            <td>${player.status}</td>
+            <td>${player.name || "Анықталмаған"}</td>
+            <td>${player.status || "Күтуде ⏳"}</td>
         </tr>`;
         playersTable.innerHTML += row;
     });
