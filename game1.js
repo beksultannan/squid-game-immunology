@@ -24,6 +24,7 @@ function finishRound1(playerName, correctAnswers) {
     localStorage.setItem("players", JSON.stringify(players));
 }
 
+
 function startRound2() {
     const questionsRound2 = [
         { question: "Аутотрансплантация дегеніміз не?", options: ["Өз тінін басқа бөлікке ауыстыру", "Басқа адамнан мүшені алу", "Жануардан адамға трансплантациялау"], correct: 0 },
