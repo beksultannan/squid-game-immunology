@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ойынды күту</title>
+    <title>Ойын күту</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,25 +11,21 @@
             background-color: black;
             color: white;
         }
-        .container {
-            margin-top: 50px;
-        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Ойын әлі басталған жоқ...</h1>
-        <p id="status-text">⏳ Админ ойын бастағанша күтіңіз...</p>
-    </div>
+    <h1>Ойын басталуын күтіңіз...</h1>
+    <p>Админ ойынды бастағанда сіз автоматты түрде ойынға кіресіз.</p>
 
     <script>
         function checkGameStart() {
-            if (localStorage.getItem("gameStarted") === "true") {
+            let gameStarted = localStorage.getItem("gameStarted");
+            if (gameStarted === "true") {
                 window.location.href = "game.html";
             }
         }
 
-        setInterval(checkGameStart, 2000);
+        setInterval(checkGameStart, 3000); // Әр 3 секунд сайын тексереді
     </script>
 </body>
 </html>
