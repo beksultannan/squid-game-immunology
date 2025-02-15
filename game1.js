@@ -96,3 +96,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     loadQuestion();
 });
+
+function startRound2() {
+    localStorage.setItem("currentRound", "round2");
+    window.location.href = "game2.html";
+}
+
