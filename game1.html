@@ -30,6 +30,7 @@
     <p id="result-text"></p>
 
     <script>
+        
         document.addEventListener("DOMContentLoaded", function () {
     let playerName = localStorage.getItem("playerName");
     let playedPlayers = JSON.parse(localStorage.getItem("playedPlayers")) || [];
@@ -37,6 +38,9 @@
     if (!playerName || playedPlayers.includes(playerName)) {
         alert("⚠️ Сіз бұл ойынды бұрын ойнап қойғансыз! Қайта ойнауға болмайды.");
         window.location.href = "index.html";
+
+        <script src="game1.js"></script>
+
     }
 });
 
