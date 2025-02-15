@@ -1,30 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="kk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Squid Game: Immunology</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Squid Game: Immunology</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- HTML5 QR Code кітапханасы -->
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+  <script src="script.js" defer></script>
 </head>
 <body>
-    <audio id="background-music" autoplay loop>
-        <source src="music/round_and_round.mp3" type="audio/mpeg">
-    </audio>
-    
-    <div class="container">
-        <h1>Squid Game: Immunology</h1>
-        <p>Ойынға қатысу үшін төмендегі батырманы басыңыз.</p>
-        <input type="text" id="player-name" placeholder="Атыңызды енгізіңіз">
-        <button id="register-btn">Тіркелу</button>
-        <button id="start-game">Ойынды бастау</button>
+  <!-- Фон видеосы -->
+  <video class="video-bg" autoplay loop muted playsinline>
+    <source src="videos/squid-game-bg.mp4" type="video/mp4">
+    Сіздің браузеріңіз бұл видеоны қолдамайды.
+  </video>
+
+  <!-- Фондық музыка -->
+  <audio id="background-music" loop>
+    <source src="music/round_and_round.mp3" type="audio/mpeg">
+    Сіздің браузеріңіз аудионы қолдамайды.
+  </audio>
+
+  <div class="container">
+    <h1>Squid Game: Immunology</h1>
+    <p>Ойынға қатысу үшін төмендегі батырмаларды қолданыңыз.</p>
+
+    <!-- Тіркелу формасы -->
+    <div id="registration">
+      <input type="text" id="player-name" placeholder="Атыңызды енгізіңіз">
+      <button id="register-btn">Тіркелу</button>
     </div>
 
-    <div id="game-area" class="hidden">
-        <h2 id="game-title"></h2>
-        <p id="game-instructions"></p>
-        <div id="qr-code"></div>
-        <button id="next-task">Келесі тапсырма</button>
+    <!-- Ойынды бастау бөлімі -->
+    <div id="start-section" class="hidden">
+      <button id="start-game-btn">Ойынды бастау</button>
     </div>
+  </div>
+
+  <!-- QR код сканерлеу аймағы -->
+  <div id="qr-scanner" class="hidden">
+    <h2>QR кодты сканерлеңіз</h2>
+    <div id="qr-reader" style="width:300px; margin: 0 auto;"></div>
+  </div>
 </body>
 </html>
