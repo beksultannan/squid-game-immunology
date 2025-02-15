@@ -1,108 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Gasoek+One&display=swap');
-
+/* style.css */
 body {
-  font-family: 'Gasoek One', sans-serif;
-  text-transform: uppercase;
-  text-align: center;
-  background-color: black;
-  color: white;
-  margin: 0;
-  padding: 0;
+    font-family: 'Squid Game Font', sans-serif;
+    background-color: black;
+    color: white;
+    text-align: center;
 }
-
-.video-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -1;
-  opacity: 0.6;
-}
-
-.container {
-  position: relative;
-  z-index: 2;
-  padding-top: 100px;
-}
-
-/* Тіркелу формасы, ойыншылар тізімі, т.б. */
-#registration, #players-table, #start-section, #qr-scanner {
-  margin: 20px auto;
-}
-
-input[type="text"] {
-  padding: 10px;
-  font-size: 18px;
-  margin: 10px;
-  border: 2px solid white;
-  border-radius: 5px;
-  background: transparent;
-  color: white;
-}
-
 button {
-  padding: 10px 20px;
-  font-size: 18px;
-  background-color: red;
-  color: white;
-  border: none;
-  cursor: pointer;
-  margin: 10px;
-  transition: transform 0.2s;
-}
-
-button:hover {
-  transform: scale(1.1);
-}
-
-.hidden {
-  display: none;
-}
-
-#players-table ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-#players-table li {
-  margin: 5px;
-}
-
-/* QR код стилі */
-#qr-reader {
-  margin-top: 20px;
-  border: 2px solid #fff;
-  padding: 10px;
-}
-
-/* Анимациялар */
-.fade-in {
-  opacity: 0;
-  animation: fadeIn 1s forwards;
-}
-
-.delay-1 {
-  animation-delay: 0.5s;
-}
-
-.delay-2 {
-  animation-delay: 1s;
-}
-
-.delay-3 {
-  animation-delay: 1.5s;
-}
-
-.delay-4 {
-  animation-delay: 2s;
-}
-
-.delay-5 {
-  animation-delay: 2.5s;
-}
-
-@keyframes fadeIn {
-  to { opacity: 1; }
+    background-color: red;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
 }
