@@ -1,4 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
+    let currentRound = localStorage.getItem("currentRound") || "round1";
+
+    if (currentRound === "round2") {
+        startRound2(); // Екінші раундтың сұрақтарын жүктеу
+    } else {
+        startRound1(); // Бірінші раундтың сұрақтарын жүктеу
+    }
+});
+
+function startRound1() {
     const questionsRound1 = [
         { question: "1902 жылы Ullman алғаш рет адамның бүйрегін трансплантациялады.", answer: "false" },
         { question: "Трансплантацияның сәттілігі донор мен реципиенттің иммунологиялық сәйкестігіне байланысты.", answer: "true" },
@@ -6,17 +16,24 @@ document.addEventListener("DOMContentLoaded", function () {
         { question: "HLA-антигендері трансплантацияның қабылдануына тікелей әсер етеді.", answer: "true" },
         { question: "Жедел қабылдамау трансплантациядан кейін бірнеше жыл өткенде дамиды.", answer: "false" }
     ];
+    
+    loadQuestions(questionsRound1);
+}
 
+function startRound2() {
     const questionsRound2 = [
         { question: "Аутотрансплантация дегеніміз не?", options: ["Өз тінін басқа бөлікке ауыстыру", "Басқа адамнан мүшені алу", "Жануардан адамға трансплантациялау"], correct: 0 },
         { question: "Аллотрансплантация дегеніміз не?", options: ["Өз тінін басқа бөлікке ауыстыру", "Басқа адамнан мүшені алу", "Жануардан адамға трансплантациялау"], correct: 1 },
         { question: "Ксенотрансплантация дегеніміз не?", options: ["Өз тінін басқа бөлікке ауыстыру", "Басқа адамнан мүшені алу", "Жануардан адамға трансплантациялау"], correct: 2 }
     ];
+    
+    loadQuestions(questionsRound2);
+}
 
+function loadQuestions(questions) {
     let currentQuestionIndex = 0;
     let correctAnswers = 0;
     let gameOver = false;
-    let currentRound = localStorage.getItem("currentRound") || "round1";
 
     const questionText = document.getElementById("question-text");
     const trueButton = document.getElementById("true-btn");
@@ -24,20 +41,18 @@ document.addEventListener("DOMContentLoaded", function () {
     const resultText = document.getElementById("result-text");
 
     function loadQuestion() {
-        let questions = currentRound === "round1" ? questionsRound1 : questionsRound2;
-
         if (currentQuestionIndex < questions.length) {
-            if (currentRound === "round1") {
-                questionText.textContent = questions[currentQuestionIndex].question;
-                trueButton.style.display = "inline-block";
-                falseButton.style.display = "inline-block";
-            } else {
+            let question = questions[currentQuestionIndex];
+
+            if (question.options) {
+                // Көп нұсқалы сұрақтар (2-раунд)
                 questionText.innerHTML = `
-                    <p>${questions[currentQuestionIndex].question}</p>
-                    ${questions[currentQuestionIndex].options.map((opt, index) => 
+                    <p>${question.question}</p>
+                    ${question.options.map((opt, index) => 
                         `<button class="btn option-btn" data-index="${index}">${opt}</button>`
                     ).join("")}
                 `;
+
                 document.querySelectorAll(".option-btn").forEach(btn => {
                     btn.addEventListener("click", function () {
                         checkAnswer(parseInt(this.dataset.index));
@@ -46,7 +61,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 trueButton.style.display = "none";
                 falseButton.style.display = "none";
+            } else {
+                // True/False сұрақтар (1-раунд)
+                questionText.textContent = question.question;
+                trueButton.style.display = "inline-block";
+                falseButton.style.display = "inline-block";
             }
+
             resultText.textContent = "";
         } else {
             checkResult();
@@ -54,12 +75,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function checkAnswer(userAnswer) {
-        let questions = currentRound === "round1" ? questionsRound1 : questionsRound2;
+        let question = questions[currentQuestionIndex];
 
         if (gameOver) return;
 
-        if ((currentRound === "round1" && userAnswer === questions[currentQuestionIndex].answer) ||
-            (currentRound === "round2" && userAnswer === questions[currentQuestionIndex].correct)) {
+        if ((question.options && userAnswer === question.correct) || 
+            (!question.options && userAnswer === question.answer)) {
             correctAnswers++;
         }
 
@@ -73,8 +94,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function checkResult() {
+        let currentRound = localStorage.getItem("currentRound");
+
         if (correctAnswers >= 2) {
-            resultText.textContent = `🔥 Құттықтаймыз! Сіз ${correctAnswers}/${currentRound === "round1" ? 5 : 3} дұрыс жауап бердіңіз!`;
+            resultText.textContent = `🔥 Құттықтаймыз! Сіз ${correctAnswers}/${questions.length} дұрыс жауап бердіңіз!`;
 
             if (currentRound === "round1") {
                 localStorage.setItem("currentRound", "round2");
@@ -83,7 +106,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 resultText.textContent += " 🏆 Сіз ойынды жеңіп алдыңыз!";
             }
         } else {
-            resultText.textContent = `❌ Сіз тек ${correctAnswers}/${currentRound === "round1" ? 5 : 3} дұрыс жауап бердіңіз. Ойыннан шығарылдыңыз.`;
+            resultText.textContent = `❌ Сіз тек ${correctAnswers}/${questions.length} дұрыс жауап бердіңіз. Ойыннан шығарылдыңыз.`;
         }
 
         trueButton.style.display = "none";
@@ -95,10 +118,4 @@ document.addEventListener("DOMContentLoaded", function () {
     falseButton.addEventListener("click", () => checkAnswer("false"));
 
     loadQuestion();
-});
-
-function startRound2() {
-    localStorage.setItem("currentRound", "round2");
-    window.location.href = "game2.html";
 }
-
