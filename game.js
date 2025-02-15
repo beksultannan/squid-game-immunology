@@ -42,25 +42,26 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    function checkResult() {
-        let status = correctAnswers >= 2 ? "Келесі кезеңге өтті ✅" : "Шығарылды ❌";
+  function checkResult() {
+    let status = correctAnswers >= 2 ? "Келесі кезеңге өтті ✅" : "Шығарылды ❌";
+    
+    resultText.textContent = correctAnswers >= 2 
+        ? `🔥 Құттықтаймыз! Сіз ${correctAnswers}/5 дұрыс жауап бердіңіз және келесі кезеңге өттіңіз!` 
+        : `❌ Сіз тек ${correctAnswers}/5 дұрыс жауап бердіңіз. Ойыннан шығарылдыңыз.`;
 
-        resultText.textContent = correctAnswers >= 2 
-            ? `🔥 Құттықтаймыз! Сіз ${correctAnswers}/5 дұрыс жауап бердіңіз және келесі кезеңге өттіңіз!` 
-            : `❌ Сіз тек ${correctAnswers}/5 дұрыс жауап бердіңіз. Ойыннан шығарылдыңыз.`;
+    trueButton.style.display = "none";
+    falseButton.style.display = "none";
+    gameOver = true;
 
-        trueButton.style.display = "none";
-        falseButton.style.display = "none";
-        gameOver = true;
+    // Ойыншы статусын жаңарту
+    let players = JSON.parse(localStorage.getItem("players")) || [];
+    let updatedPlayers = players.map(player => 
+        player.name === playerName ? { ...player, status: status } : player
+    );
 
-        // Ойыншының нәтижесін localStorage-ке сақтау
-        let players = JSON.parse(localStorage.getItem("players")) || [];
-        let updatedPlayers = players.map(player => 
-            player.name === playerName ? { ...player, status: status } : player
-        );
+    localStorage.setItem("players", JSON.stringify(updatedPlayers));
+}
 
-        localStorage.setItem("players", JSON.stringify(updatedPlayers));
-    }
 
     trueButton.addEventListener("click", () => checkAnswer("true"));
     falseButton.addEventListener("click", () => checkAnswer("false"));
