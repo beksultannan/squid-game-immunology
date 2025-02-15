@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         localStorage.setItem("round1Players", JSON.stringify(players));
         alert("Бірінші раунд басталды!");
-        window.location.href = "game1.html";
+        window.location.href = "game.html";
     });
 
     // Екінші раундты бастау
