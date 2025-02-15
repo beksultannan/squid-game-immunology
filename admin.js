@@ -101,3 +101,16 @@ document.getElementById("start-round2-btn").addEventListener("click", function (
 
     loadPlayers();
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    let currentRound = localStorage.getItem("currentRound") || "round1";
+
+    if (currentRound === "round2") {
+        console.log("🎯 Екінші раунд басталды!");
+        startRound2();
+    } else {
+        console.log("🎮 Бірінші раунд басталды!");
+        startRound1();
+    }
+});
+
