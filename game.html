@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ойын</title>
+    <title>Қызыл-жасыл жарығы</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Ойын басталды!</h1>
-    <div id="task-container">
-        <p>Сіздің тапсырмаңыз:</p>
-        <p id="task"></p>
-        <button onclick="checkAnswer()">Жауап беру</button>
+    <div class="container">
+        <h1>Қызыл-жасыл жарығы</h1>
+        <p id="question-text">Сұрақ осында көрсетіледі</p>
+        <button id="true-btn">Дұрыс ✅</button>
+        <button id="false-btn">Бұрыс ❌</button>
+        <p id="result-text"></p>
     </div>
     <script src="game.js"></script>
 </body>
