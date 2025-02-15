@@ -27,7 +27,7 @@ body {
   padding-top: 100px;
 }
 
-#registration, #players-table, #start-section, #qr-display {
+#registration, #players-table, #start-section, #qr-scanner {
   margin: 20px auto;
 }
 
@@ -60,10 +60,8 @@ button:hover {
   display: none;
 }
 
-#qrcode {
-  width: 250px;
-  height: 250px;
-  margin: 20px auto;
+#qr-reader {
+  margin-top: 20px;
   border: 2px solid #fff;
   padding: 10px;
 }
