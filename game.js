@@ -1,96 +1,60 @@
 document.addEventListener("DOMContentLoaded", function () {
-    let players = JSON.parse(localStorage.getItem("players")) || [];
-    let currentRound = localStorage.getItem("round") || 1;
-
-    const playersList = document.getElementById("playersList");
-    const startGameBtn = document.getElementById("startGame");
-    const nextRoundBtn = document.getElementById("nextRound");
-    const questionText = document.getElementById("questionText");
-    const answerInput = document.getElementById("answerInput");
-    const submitAnswerBtn = document.getElementById("submitAnswer");
-
-    // 🔹 Тапсырмалар тізімі
     const questions = [
-        { question: "Иммундық жүйенің негізгі органы?", answer: "тимус" },
-        { question: "Лимфоциттердің екі негізгі түрі?", answer: "B және T" },
-        { question: "Антигендерге жауап беретін молекула?", answer: "антидене" },
-        { question: "Иммуноглобулиндердің қанша түрі бар?", answer: "5" }
+        { question: "1902 жылы Ullman алғаш рет адамның бүйрегін трансплантациялады.", answer: "false" },
+        { question: "Трансплантацияның сәттілігі донор мен реципиенттің иммунологиялық сәйкестігіне байланысты.", answer: "true" },
+        { question: "Ксенотрансплантация – бір түрге жататын, бірақ генетикалық әртүрлі екі адам арасында мүшелерді алмастыру.", answer: "false" },
+        { question: "HLA-антигендері трансплантацияның қабылдануына тікелей әсер етеді.", answer: "true" },
+        { question: "Жедел қабылдамау трансплантациядан кейін бірнеше жыл өткенде дамиды.", answer: "false" }
     ];
 
-    function loadPlayers() {
-        playersList.innerHTML = "";
-        players.forEach((player, index) => {
-            let playerElement = document.createElement("li");
-            playerElement.textContent = `№${index + 1}: ${player.name} (Раунд: ${player.round})`;
-            playersList.appendChild(playerElement);
-        });
-    }
+    let currentQuestionIndex = 0;
+    let correctAnswers = 0;
+    let gameOver = false;
 
-    function startGame() {
-        if (players.length === 0) {
-            alert("Ойыншылар жоқ! Алдымен тіркеліңіз.");
-            return;
-        }
-        currentRound = 1;
-        localStorage.setItem("round", currentRound);
-        alert("Ойын басталды! 🎮");
-        loadPlayers();
-        showQuestion();
-    }
+    const questionText = document.getElementById("question-text");
+    const trueButton = document.getElementById("true-btn");
+    const falseButton = document.getElementById("false-btn");
+    const resultText = document.getElementById("result-text");
 
-    function showQuestion() {
-        let questionObj = getRandomQuestion();
-        questionText.textContent = questionObj.question;
-        answerInput.value = "";
-        answerInput.dataset.correctAnswer = questionObj.answer.toLowerCase();
-    }
-
-    function getRandomQuestion() {
-        return questions[Math.floor(Math.random() * questions.length)];
-    }
-
-    function checkAnswer() {
-        let userAnswer = answerInput.value.toLowerCase();
-        let correctAnswer = answerInput.dataset.correctAnswer;
-
-        if (userAnswer === correctAnswer) {
-            alert("✅ Дұрыс жауап! Келесі раундқа өттіңіз.");
-            advanceToNextRound();
+    function loadQuestion() {
+        if (currentQuestionIndex < questions.length) {
+            questionText.textContent = questions[currentQuestionIndex].question;
+            resultText.textContent = "";
         } else {
-            alert("❌ Қате! Сіз ойыннан шықтыңыз.");
-            eliminatePlayer();
+            checkResult();
         }
     }
 
-    function advanceToNextRound() {
-        currentRound++;
-        localStorage.setItem("round", currentRound);
-        players = players.filter(player => Math.random() > 0.5); // 50% өтеді
-        players.forEach(player => player.round = currentRound);
-        localStorage.setItem("players", JSON.stringify(players));
-        alert(`Раунд ${currentRound} басталды!`);
-        loadPlayers();
-        showQuestion();
-        checkWinner();
-    }
+    function checkAnswer(userAnswer) {
+        if (gameOver) return;
 
-    function eliminatePlayer() {
-        players.pop(); // Соңғы ойыншыны шығару
-        localStorage.setItem("players", JSON.stringify(players));
-        loadPlayers();
-        checkWinner();
-    }
+        if (userAnswer === questions[currentQuestionIndex].answer) {
+            correctAnswers++;
+        }
 
-    function checkWinner() {
-        if (players.length === 1) {
-            alert(`🏆 Жеңімпаз: ${players[0].name}`);
-            localStorage.clear();
+        currentQuestionIndex++;
+
+        if (currentQuestionIndex < questions.length) {
+            loadQuestion();
+        } else {
+            checkResult();
         }
     }
 
-    startGameBtn.addEventListener("click", startGame);
-    nextRoundBtn.addEventListener("click", advanceToNextRound);
-    submitAnswerBtn.addEventListener("click", checkAnswer);
+    function checkResult() {
+        if (correctAnswers >= 2) {
+            resultText.textContent = `🔥 Құттықтаймыз! Сіз ${correctAnswers}/5 дұрыс жауап бердіңіз және келесі кезеңге өттіңіз!`;
+        } else {
+            resultText.textContent = `❌ Сіз тек ${correctAnswers}/5 дұрыс жауап бердіңіз. Ойыннан шығарылдыңыз.`;
+        }
 
-    loadPlayers();
+        trueButton.style.display = "none";
+        falseButton.style.display = "none";
+        gameOver = true;
+    }
+
+    trueButton.addEventListener("click", () => checkAnswer("true"));
+    falseButton.addEventListener("click", () => checkAnswer("false"));
+
+    loadQuestion();
 });
