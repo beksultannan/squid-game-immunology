@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     alert(`${name} тіркелді!`);
     registrationDiv.classList.add('hidden');
     startSection.classList.remove('hidden');
-    // Фондық музыканы ойнату (автоматты түрде браузерлер кейде бұғаттайды)
+    // Фондық музыканы ойнату (бұл функция браузердің рұқсаттарына байланысты жұмыс істейді)
     backgroundMusic.play().catch(error => {
       console.log('Музыканы ойнату мүмкін болмады:', error);
     });
@@ -34,20 +34,18 @@ document.addEventListener('DOMContentLoaded', () => {
 // HTML5 QR Code кітапханасын қолдану арқылы QR код сканерін бастау
 function startQRScanner() {
   const qrCodeSuccessCallback = (decodedText, decodedResult) => {
-    // QR код сәтті оқылды
     alert(`QR код оқылды: ${decodedText}`);
-    // Егер QR код URL болса, автоматты түрде сол бетке бағыттаймыз:
+    // Егер QR код URL болса, автоматты түрде сол URL-ге бағыттаймыз:
     if (decodedText.startsWith('http')) {
       window.location.href = decodedText;
     }
-    // Сканерді тоқтату үшін: (html5QrcodeScanner.clear())
+    // Сканерді тоқтату (қосымша)
     html5QrcodeScanner.clear().catch(error => {
       console.error('Сканерді тоқтата алмады:', error);
     });
   };
 
   const qrCodeErrorCallback = errorMessage => {
-    // Уақытша қателік пайда болса, консольге шығарамыз
     console.log(`QR код оқылмады: ${errorMessage}`);
   };
 
@@ -58,5 +56,6 @@ function startQRScanner() {
   html5QrcodeScanner.start({ facingMode: "environment" }, config, qrCodeSuccessCallback, qrCodeErrorCallback)
     .catch(err => {
       console.error("QR сканерді іске қосу қатесі:", err);
+      alert("Камера іске қосылмады. Камера рұқсатын тексеріңіз.");
     });
 }
