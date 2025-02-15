@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ойынды күту</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: black;
+            color: white;
+        }
+        .container {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ойын әлі басталған жоқ...</h1>
+        <p id="status-text">⏳ Админ ойын бастағанша күтіңіз...</p>
+    </div>
+
+    <script>
+        function checkGameStart() {
+            if (localStorage.getItem("gameStarted") === "true") {
+                window.location.href = "game.html";
+            }
+        }
+
+        setInterval(checkGameStart, 2000);
+    </script>
+</body>
+</html>
