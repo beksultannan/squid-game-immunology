@@ -27,6 +27,11 @@ body {
   padding-top: 100px;
 }
 
+/* Тіркелу формасы мен ойыншылар тізімі */
+#registration, #players-table {
+  margin: 20px auto;
+}
+
 input[type="text"] {
   padding: 10px;
   font-size: 18px;
@@ -56,10 +61,8 @@ button:hover {
   display: none;
 }
 
-#qrcode {
-  width: 200px;
-  height: 200px;
-  margin: 20px auto;
+#qr-reader {
+  margin-top: 20px;
   border: 2px solid #fff;
   padding: 10px;
 }
