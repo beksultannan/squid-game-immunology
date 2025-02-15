@@ -1,56 +1,19 @@
 <!DOCTYPE html>
 <html lang="kk">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Squid Game: Immunology</title>
-  <link rel="stylesheet" href="styles.css">
-  <!-- Firebase (compat версиясы) -->
-  <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-database-compat.js"></script>
-  <!-- HTML5 QR Code кітапханасы (камера сканері үшін) -->
-  <script src="https://unpkg.com/html5-qrcode@2.3.7" type="text/javascript"></script>
-  <script src="script.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Squid Game Immunology</title>
+    <script defer src="script.js"></script>
 </head>
 <body>
-  <!-- Фон видеосы -->
-  <video class="video-bg" autoplay loop muted playsinline>
-    <source src="videos/squid-game-bg.mp4" type="video/mp4">
-    Сіздің браузеріңіз бұл видеоны қолдамайды.
-  </video>
-  
-  <!-- Фондық музыка -->
-  <audio id="background-music" loop>
-    <source src="music/round_and_round.mp3" type="audio/mpeg">
-    Сіздің браузеріңіз аудионы қолдамайды.
-  </audio>
-  
-  <div class="container">
-    <h1 class="fade-in">Squid Game: Immunology</h1>
-    <p class="fade-in delay-1">Ойынға қатысу үшін төмендегі форманы толтырыңыз.</p>
-    
-    <!-- Тіркелу формасы -->
-    <div id="registration" class="fade-in delay-2">
-      <input type="text" id="player-name" placeholder="Атыңызды енгізіңіз">
-      <button id="register-btn">Тіркелу</button>
-    </div>
-    
-    <!-- Ойыншылар тізімі -->
-    <div id="players-table" class="fade-in delay-3">
-      <h2>Ойыншылар:</h2>
-      <ul id="players-list"></ul>
-    </div>
-    
-    <!-- Ойынды бастау бөлімі -->
-    <div id="start-section" class="hidden fade-in delay-4">
-      <button id="start-game-btn">Ойынды бастау (QR код сканері)</button>
-    </div>
-    
-    <!-- QR код сканері аймағы -->
-    <div id="qr-scanner" class="hidden fade-in delay-5">
-      <h2>QR кодты сканерлеңіз</h2>
-      <div id="qr-reader" style="width:300px; margin: 0 auto;"></div>
-    </div>
-  </div>
+    <h1>Ойынға тіркелу</h1>
+    <input type="text" id="playerName" placeholder="Атыңызды енгізіңіз">
+    <button onclick="registerPlayer()">Тіркелу</button>
+    <button onclick="startGame()">Ойынды бастау</button>
+    <button onclick="nextRound()">Келесі кезең</button>
+
+    <h3>Ойыншылар:</h3>
+    <ul id="playerList"></ul>
 </body>
 </html>
