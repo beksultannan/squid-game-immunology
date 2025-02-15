@@ -59,7 +59,11 @@
             }
         }
 
-        document.getElementById("start-game-btn").addEventListener("click", startGame);
+        document.getElementById("start-game-btn").addEventListener("click", () => {
+            localStorage.setItem("gameStarted", "true");
+            alert("🟢 Ойын басталды!");
+        });
+
         loadPlayers();
         loadResults();
     </script>
