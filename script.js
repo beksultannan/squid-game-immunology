@@ -4,10 +4,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const playerNameInput = document.getElementById('player-name');
   const registrationDiv = document.getElementById('registration');
   const startSection = document.getElementById('start-section');
-  const qrScannerDiv = document.getElementById('qr-scanner');
+  const qrDisplay = document.getElementById('qr-display');
   const backgroundMusic = document.getElementById('background-music');
 
-  // Тіркелу
+  // Тіркелу батырмасын басқанда
   registerBtn.addEventListener('click', () => {
     const name = playerNameInput.value.trim();
     if (name === '') {
@@ -17,45 +17,32 @@ document.addEventListener('DOMContentLoaded', () => {
     alert(`${name} тіркелді!`);
     registrationDiv.classList.add('hidden');
     startSection.classList.remove('hidden');
-    // Фондық музыканы ойнату (бұл функция браузердің рұқсаттарына байланысты жұмыс істейді)
-    backgroundMusic.play().catch(error => {
-      console.log('Музыканы ойнату мүмкін болмады:', error);
-    });
+    // Фондық музыканы ойнату (бұл браузер рұқсаттарына байланысты)
+    backgroundMusic.play().catch(error => console.log("Музыканы ойнату қатесі:", error));
   });
 
-  // Ойынды бастау батырмасы
+  // Ойынды бастау батырмасы басылғанда QR код шығару
   startGameBtn.addEventListener('click', () => {
     startSection.classList.add('hidden');
-    qrScannerDiv.classList.remove('hidden');
-    startQRScanner();
+    qrDisplay.classList.remove('hidden');
+    generateQRCode();
   });
 });
 
-// HTML5 QR Code кітапханасын қолдану арқылы QR код сканерін бастау
-function startQRScanner() {
-  const qrCodeSuccessCallback = (decodedText, decodedResult) => {
-    alert(`QR код оқылды: ${decodedText}`);
-    // Егер QR код URL болса, автоматты түрде сол URL-ге бағыттаймыз:
-    if (decodedText.startsWith('http')) {
-      window.location.href = decodedText;
-    }
-    // Сканерді тоқтату (қосымша)
-    html5QrcodeScanner.clear().catch(error => {
-      console.error('Сканерді тоқтата алмады:', error);
-    });
-  };
-
-  const qrCodeErrorCallback = errorMessage => {
-    console.log(`QR код оқылмады: ${errorMessage}`);
-  };
-
-  // Html5Qrcode объектісін құру
-  let html5QrcodeScanner = new Html5Qrcode("qr-reader");
-  const config = { fps: 10, qrbox: 250 };
-
-  html5QrcodeScanner.start({ facingMode: "environment" }, config, qrCodeSuccessCallback, qrCodeErrorCallback)
-    .catch(err => {
-      console.error("QR сканерді іске қосу қатесі:", err);
-      alert("Камера іске қосылмады. Камера рұқсатын тексеріңіз.");
-    });
+// QR код генерациялау функциясы
+function generateQRCode() {
+  // Ойын бетіне арналған URL-ді өзіңіздің нақты URL-ге ауыстырыңыз
+  const gameUrl = "https://beksultannan.github.io/squid-game-immunology/game1.html";
+  const qrcodeContainer = document.getElementById("qrcode");
+  // Егер бұрын QR код болса, оны тазалау
+  qrcodeContainer.innerHTML = "";
+  // QRCode.js кітапханасы арқылы QR кодты генерациялау
+  new QRCode(qrcodeContainer, {
+    text: gameUrl,
+    width: 200,
+    height: 200,
+    colorDark: "#ffffff",
+    colorLight: "#111111",
+    correctLevel: QRCode.CorrectLevel.H
+  });
 }
