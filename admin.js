@@ -1,19 +1,23 @@
-document.addEventListener("DOMContentLoaded", loadPlayers);
-
-function loadPlayers() {
+document.addEventListener("DOMContentLoaded", function() {
     let players = JSON.parse(localStorage.getItem("players")) || [];
     let playersTable = document.getElementById("players-list");
-    playersTable.innerHTML = ""; 
+
+    if (players.length === 0) {
+        playersTable.innerHTML = "<tr><td colspan='3'>Ойыншылар жоқ</td></tr>";
+        return;
+    }
+
+    playersTable.innerHTML = ""; // Кестені тазалау
 
     players.forEach((player, index) => {
         let row = `<tr>
             <td>${index + 1}</td>
-            <td>${player.name || "Анықталмаған"}</td>
+            <td>${player.name || "Белгісіз"}</td>
             <td>${player.status || "Күтуде ⏳"}</td>
         </tr>`;
         playersTable.innerHTML += row;
     });
-}
+});
 
 
 function startGame() {
