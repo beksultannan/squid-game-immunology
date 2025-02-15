@@ -41,35 +41,26 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-  function checkResult() {
-    const playerName = localStorage.getItem("playerName");
-    let players = JSON.parse(localStorage.getItem("players")) || [];
-
-    if (correctAnswers >= 2) {
-        resultText.textContent = `🔥 Құттықтаймыз! Сіз ${correctAnswers}/5 дұрыс жауап бердіңіз және келесі кезеңге өттіңіз!`;
-
-        // Бірінші раунд жеңімпаздарын сақтау
+    function checkResult() {
+        let playerName = localStorage.getItem("playerName");
+        let players = JSON.parse(localStorage.getItem("players")) || [];
         let winners = JSON.parse(localStorage.getItem("winners_round1")) || [];
-        winners.push(playerName);
-        localStorage.setItem("winners_round1", JSON.stringify(winners));
 
-        players = players.map(player =>
-            player.name === playerName ? { ...player, status: "Келесі кезеңге өтті ✅" } : player
-        );
-    } else {
-        resultText.textContent = `❌ Сіз тек ${correctAnswers}/5 дұрыс жауап бердіңіз. Ойыннан шығарылдыңыз.`;
-        
-        players = players.map(player =>
-            player.name === playerName ? { ...player, status: "Шығарылды ❌" } : player
-        );
-    }
+        if (correctAnswers >= 2) {
+            resultText.textContent = `🔥 Құттықтаймыз! Сіз ${correctAnswers}/5 дұрыс жауап бердіңіз және келесі кезеңге өттіңіз!`;
 
-    localStorage.setItem("players", JSON.stringify(players));
-    trueButton.style.display = "none";
-    falseButton.style.display = "none";
-    gameOver = true;
-}
+            winners.push({ name: playerName, status: "Келесі раундқа өтті ✅" });
+            localStorage.setItem("winners_round1", JSON.stringify(winners));
+        } else {
+            resultText.textContent = `❌ Сіз тек ${correctAnswers}/5 дұрыс жауап бердіңіз. Ойыннан шығарылдыңыз.`;
+        }
 
+        players = players.map(player => {
+            if (player.name === playerName) {
+                return { ...player, status: correctAnswers >= 2 ? "Келесі раундқа өтті ✅" : "Шығарылды ❌" };
+            }
+            return player;
+        });
 
         localStorage.setItem("players", JSON.stringify(players));
 
