@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let currentQuestionIndex = 0;
     let correctAnswers = 0;
     let gameOver = false;
+    let playerName = localStorage.getItem("playerName");
 
     const questionText = document.getElementById("question-text");
     const trueButton = document.getElementById("true-btn");
@@ -42,15 +43,23 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function checkResult() {
-        if (correctAnswers >= 2) {
-            resultText.textContent = `🔥 Құттықтаймыз! Сіз ${correctAnswers}/5 дұрыс жауап бердіңіз және келесі кезеңге өттіңіз!`;
-        } else {
-            resultText.textContent = `❌ Сіз тек ${correctAnswers}/5 дұрыс жауап бердіңіз. Ойыннан шығарылдыңыз.`;
-        }
+        let status = correctAnswers >= 2 ? "Келесі кезеңге өтті ✅" : "Шығарылды ❌";
+
+        resultText.textContent = correctAnswers >= 2 
+            ? `🔥 Құттықтаймыз! Сіз ${correctAnswers}/5 дұрыс жауап бердіңіз және келесі кезеңге өттіңіз!` 
+            : `❌ Сіз тек ${correctAnswers}/5 дұрыс жауап бердіңіз. Ойыннан шығарылдыңыз.`;
 
         trueButton.style.display = "none";
         falseButton.style.display = "none";
         gameOver = true;
+
+        // Ойыншының нәтижесін localStorage-ке сақтау
+        let players = JSON.parse(localStorage.getItem("players")) || [];
+        let updatedPlayers = players.map(player => 
+            player.name === playerName ? { ...player, status: status } : player
+        );
+
+        localStorage.setItem("players", JSON.stringify(updatedPlayers));
     }
 
     trueButton.addEventListener("click", () => checkAnswer("true"));
