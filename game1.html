@@ -1,1 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ойын</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: black;
+            color: white;
+        }
+        .btn {
+            padding: 15px 30px;
+            font-size: 18px;
+            color: white;
+            background-color: red;
+            border: none;
+            cursor: pointer;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Сұраққа жауап беріңіз</h1>
+    <p id="question-text"></p>
+    <button class="btn" id="true-btn">Дұрыс</button>
+    <button class="btn" id="false-btn">Бұрыс</button>
+    <p id="result-text"></p>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    let playerName = localStorage.getItem("playerName");
+    let playedPlayers = JSON.parse(localStorage.getItem("playedPlayers")) || [];
+
+    if (!playerName || playedPlayers.includes(playerName)) {
+        alert("⚠️ Сіз бұл ойынды бұрын ойнап қойғансыз! Қайта ойнауға болмайды.");
+        window.location.href = "index.html";
+    }
+});
+
+</body>
+</html>
