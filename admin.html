@@ -1,27 +1,67 @@
 <!DOCTYPE html>
-<html lang="kk">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Админ панелі</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: black;
+            color: white;
+        }
+        .btn {
+            padding: 15px 30px;
+            font-size: 18px;
+            color: white;
+            background-color: red;
+            border: none;
+            cursor: pointer;
+            margin: 10px;
+        }
+    </style>
 </head>
 <body>
     <h1>Админ панелі</h1>
+    <h2>Ойыншылар:</h2>
+    <ul id="player-list"></ul>
+    <button class="btn" id="start-game-btn">🟢 Ойынды бастау</button>
+    <div id="results"></div>
 
-    <div id="login-section">
-        <input type="password" id="admin-password" placeholder="Құпиясөзді енгізіңіз">
-        <button onclick="checkPassword()">Кіру</button>
-    </div>
+    <script>
+        function loadPlayers() {
+            let players = JSON.parse(localStorage.getItem("players")) || [];
+            let playerList = document.getElementById("player-list");
+            playerList.innerHTML = "";
 
-    <div id="admin-panel" style="display: none;">
-        <button onclick="startGame()">Ойынды бастау</button>
-        <div id="players-list">
-            <h2>Тіркелген ойыншылар:</h2>
-            <ul id="players"></ul>
-        </div>
-    </div>
+            players.forEach(player => {
+                let li = document.createElement("li");
+                li.textContent = player;
+                playerList.appendChild(li);
+            });
+        }
 
-    <script src="admin.js"></script>
+        function startGame() {
+            localStorage.setItem("gameStarted", "true");
+            alert("🟢 Ойын басталды!");
+        }
+
+        function loadResults() {
+            let results = JSON.parse(localStorage.getItem("results")) || {};
+            let resultsDiv = document.getElementById("results");
+            resultsDiv.innerHTML = "<h3>Нәтижелер:</h3>";
+
+            for (let player in results) {
+                let p = document.createElement("p");
+                p.textContent = `${player}: ${results[player]} дұрыс жауап`;
+                resultsDiv.appendChild(p);
+            }
+        }
+
+        document.getElementById("start-game-btn").addEventListener("click", startGame);
+        loadPlayers();
+        loadResults();
+    </script>
 </body>
 </html>
