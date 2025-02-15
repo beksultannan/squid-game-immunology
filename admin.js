@@ -12,36 +12,56 @@ document.addEventListener("DOMContentLoaded", function () {
             row.innerHTML = `
                 <td>${index + 1}</td>
                 <td>${player.name || "Белгісіз"}</td>
-                <td>${player.status}</td>
+                <td>${player.status || "Күтуде ⏳"}</td>
             `;
             playersList.appendChild(row);
         });
     }
 
-    // Бірінші раундты бастау
+    // ✅ Бірінші раундты бастау батырмасы (Ойыншыларға бастау белгісін береді)
     startRound1Button.addEventListener("click", function () {
         let players = JSON.parse(localStorage.getItem("players")) || [];
+
         if (players.length === 0) {
-            alert("Бірінші раундқа өтетін ойыншылар жоқ!");
+            alert("❌ Бірінші раундқа өтетін ойыншылар жоқ!");
             return;
         }
-        localStorage.setItem("round1Players", JSON.stringify(players));
-        alert("Бірінші раунд басталды!");
-        window.location.href = "game.html";
+
+        // Ойыншыларға раунд басталғанын белгілеу
+        players = players.map(player => ({
+            ...player,
+            status: "Ойын басталды 🎮"
+        }));
+        localStorage.setItem("players", JSON.stringify(players));
+
+        // ✅ Ойыншыларды бірінші ойынға жіберу
+        localStorage.setItem("gameStatus", "round1_started");
+
+        alert("✅ Бірінші раунд басталды! Ойыншылар енді кіре алады.");
+        loadPlayers();
     });
 
-    // Екінші раундты бастау
+    // ✅ Екінші раундты бастау батырмасы
     startRound2Button.addEventListener("click", function () {
         let winners = JSON.parse(localStorage.getItem("winners_round1")) || [];
 
         if (winners.length === 0) {
-            alert("Екінші раундқа өтетін ойыншылар жоқ!");
+            alert("❌ Екінші раундқа өтетін ойыншылар жоқ!");
             return;
         }
 
-        localStorage.setItem("round2Players", JSON.stringify(winners));
-        alert("Екінші раунд басталды!");
-        window.location.href = "game2.html";
+        // Ойыншыларға раунд басталғанын белгілеу
+        winners = winners.map(player => ({
+            ...player,
+            status: "Екінші раунд 🎯"
+        }));
+        localStorage.setItem("players", JSON.stringify(winners));
+
+        // ✅ Ойыншыларды екінші ойынға жіберу
+        localStorage.setItem("gameStatus", "round2_started");
+
+        alert("✅ Екінші раунд басталды! Жеңімпаздар ойынды бастай алады.");
+        loadPlayers();
     });
 
     loadPlayers();
