@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Админ панелі</title>
+    <title>Admin Panel</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             background-color: black;
             color: white;
+        }
+        .container {
+            margin-top: 50px;
         }
         .btn {
             padding: 15px 30px;
@@ -20,52 +23,40 @@
             cursor: pointer;
             margin: 10px;
         }
+        .btn:hover {
+            background-color: darkred;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid white;
+        }
     </style>
 </head>
 <body>
-    <h1>Админ панелі</h1>
-    <h2>Ойыншылар:</h2>
-    <ul id="player-list"></ul>
-    <button class="btn" id="start-game-btn">🟢 Ойынды бастау</button>
-    <div id="results"></div>
+    <div class="container">
+        <h1>Admin Panel</h1>
+        <button class="btn" onclick="startGame()">Ойынды бастау</button>
+        <button class="btn" onclick="pauseGame()">Пауза</button>
+        <button class="btn" onclick="stopGame()">Ойынды тоқтату</button>
 
-    <script>
-        function loadPlayers() {
-            let players = JSON.parse(localStorage.getItem("players")) || [];
-            let playerList = document.getElementById("player-list");
-            playerList.innerHTML = "";
+        <h2>Тіркелген ойыншылар</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Аты</th>
+                    <th>Статус</th>
+                </tr>
+            </thead>
+            <tbody id="players-list"></tbody>
+        </table>
+    </div>
 
-            players.forEach(player => {
-                let li = document.createElement("li");
-                li.textContent = player;
-                playerList.appendChild(li);
-            });
-        }
-
-        function startGame() {
-            localStorage.setItem("gameStarted", "true");
-            alert("🟢 Ойын басталды!");
-        }
-
-        function loadResults() {
-            let results = JSON.parse(localStorage.getItem("results")) || {};
-            let resultsDiv = document.getElementById("results");
-            resultsDiv.innerHTML = "<h3>Нәтижелер:</h3>";
-
-            for (let player in results) {
-                let p = document.createElement("p");
-                p.textContent = `${player}: ${results[player]} дұрыс жауап`;
-                resultsDiv.appendChild(p);
-            }
-        }
-
-        document.getElementById("start-game-btn").addEventListener("click", () => {
-            localStorage.setItem("gameStarted", "true");
-            alert("🟢 Ойын басталды!");
-        });
-
-        loadPlayers();
-        loadResults();
-    </script>
+    <script src="admin.js"></script>
 </body>
 </html>
