@@ -2,28 +2,23 @@ document.addEventListener("DOMContentLoaded", function () {
     let currentRound = localStorage.getItem("currentRound") || "round1";
 
     if (currentRound === "round2") {
-        startRound2(); // Екінші раундтың сұрақтарын жүктеу
+        startRound2(); // Егер 2-раунд басталса, оның сұрақтарын жүктеу
     } else {
-        startRound1(); // Бірінші раундтың сұрақтарын жүктеу
+        startRound1(); // Бірінші раундты бастау
     }
 });
 
-function finishRound1(playerName, correctAnswers) {
-    let players = JSON.parse(localStorage.getItem("players")) || [];
+function startRound1() {
+    const questionsRound1 = [
+        { question: "1902 жылы Ullman алғаш рет адамның бүйрегін трансплантациялады.", correct: false },
+        { question: "Трансплантацияның сәттілігі донор мен реципиенттің иммунологиялық сәйкестігіне байланысты.", correct: true },
+        { question: "Ксенотрансплантация – бір түрге жататын, бірақ генетикалық әртүрлі екі адам арасында мүшелерді алмастыру.", correct: false },
+        { question: "HLA-антигендері трансплантацияның қабылдануына тікелей әсер етеді.", correct: true },
+        { question: "Жедел қабылдамау трансплантациядан кейін бірнеше жыл өткенде дамиды.", correct: false }
+    ];
 
-    players = players.map(player => {
-        if (player.name === playerName) {
-            return {
-                ...player,
-                status: correctAnswers >= 3 ? "Келесі раунд ✔️" : "Жеңілді ❌"
-            };
-        }
-        return player;
-    });
-
-    localStorage.setItem("players", JSON.stringify(players));
+    loadQuestions(questionsRound1);
 }
-
 
 function startRound2() {
     const questionsRound2 = [
@@ -31,7 +26,7 @@ function startRound2() {
         { question: "Аллотрансплантация дегеніміз не?", options: ["Өз тінін басқа бөлікке ауыстыру", "Басқа адамнан мүшені алу", "Жануардан адамға трансплантациялау"], correct: 1 },
         { question: "Ксенотрансплантация дегеніміз не?", options: ["Өз тінін басқа бөлікке ауыстыру", "Басқа адамнан мүшені алу", "Жануардан адамға трансплантациялау"], correct: 2 }
     ];
-    
+
     loadQuestions(questionsRound2);
 }
 
@@ -85,7 +80,7 @@ function loadQuestions(questions) {
         if (gameOver) return;
 
         if ((question.options && userAnswer === question.correct) || 
-            (!question.options && userAnswer === question.answer)) {
+            (!question.options && userAnswer === question.correct)) {
             correctAnswers++;
         }
 
@@ -119,8 +114,8 @@ function loadQuestions(questions) {
         gameOver = true;
     }
 
-    trueButton.addEventListener("click", () => checkAnswer("true"));
-    falseButton.addEventListener("click", () => checkAnswer("false"));
+    trueButton.addEventListener("click", () => checkAnswer(true));
+    falseButton.addEventListener("click", () => checkAnswer(false));
 
     loadQuestion();
 }
