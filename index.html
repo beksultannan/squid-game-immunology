@@ -3,45 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Squid Game: Immunology</title>
-  <link rel="stylesheet" href="styles.css">
-  <!-- HTML5 QR Code кітапханасының нақты нұсқасы -->
-  <script src="https://unpkg.com/html5-qrcode@2.3.7" type="text/javascript"></script>
-  <script src="script.js" defer></script>
+  <title>Ойынға QR код</title>
+  <!-- QRCode.js кітапханасы -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gasoek+One&display=swap">
+  <style>
+    body {
+      background-color: #111;
+      color: #fff;
+      font-family: 'Gasoek One', sans-serif;
+      text-align: center;
+      padding-top: 50px;
+      margin: 0;
+    }
+    #qrcode {
+      width: 200px;
+      height: 200px;
+      margin: 20px auto;
+      border: 2px solid #fff;
+      padding: 10px;
+    }
+  </style>
 </head>
 <body>
-  <!-- Фон видеосы -->
-  <video class="video-bg" autoplay loop muted playsinline>
-    <source src="videos/squid-game-bg.mp4" type="video/mp4">
-    Сіздің браузеріңіз бұл видеоны қолдамайды.
-  </video>
-
-  <!-- Фондық музыка -->
-  <audio id="background-music" loop>
-    <source src="music/round_and_round.mp3" type="audio/mpeg">
-    Сіздің браузеріңіз аудионы қолдамайды.
-  </audio>
-
-  <div class="container">
-    <h1>Squid Game: Immunology</h1>
-    <p>Ойынға қатысу үшін төмендегі батырмаларды қолданыңыз.</p>
-
-    <!-- Тіркелу формасы -->
-    <div id="registration">
-      <input type="text" id="player-name" placeholder="Атыңызды енгізіңіз">
-      <button id="register-btn">Тіркелу</button>
-    </div>
-
-    <!-- Ойынды бастау бөлімі -->
-    <div id="start-section" class="hidden">
-      <button id="start-game-btn">Ойынды бастау</button>
-    </div>
-  </div>
-
-  <!-- QR код сканерлеу аймағы -->
-  <div id="qr-scanner" class="hidden">
-    <h2>QR кодты сканерлеңіз</h2>
-    <div id="qr-reader" style="width:300px; margin: 0 auto;"></div>
-  </div>
+  <h1>Ойынға QR код</h1>
+  <p>QR кодты сканерлеңіз, ойын басталады</p>
+  <div id="qrcode"></div>
+  
+  <script>
+    // Ойын парағының URL-і
+    var gameUrl = "https://beksultannan.github.io/squid-game-immunology/game1.html";
+    
+    // QR кодты генерациялау
+    var qrcode = new QRCode(document.getElementById("qrcode"), {
+      text: gameUrl,
+      width: 200,
+      height: 200,
+      colorDark: "#ffffff",
+      colorLight: "#111111",
+      correctLevel: QRCode.CorrectLevel.H
+    });
+  </script>
 </body>
 </html>
