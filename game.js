@@ -42,22 +42,26 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function checkResult() {
-        let status = correctAnswers >= 2 ? "Келесі кезеңге өтті ✅" : "Шығарылды ❌";
-        
-        let players = JSON.parse(localStorage.getItem("players")) || [];
-        let playerName = localStorage.getItem("playerName");
-
-        let updatedPlayers = players.map(player => 
-            player.name === playerName ? { ...player, status: status } : player
-        );
-
-        localStorage.setItem("players", JSON.stringify(updatedPlayers));
-
-        resultText.textContent = status;
-        trueButton.style.display = "none";
-        falseButton.style.display = "none";
-        gameOver = true;
+    if (correctAnswers >= 2) {
+        resultText.textContent = `🔥 Құттықтаймыз! Сіз ${correctAnswers}/5 дұрыс жауап бердіңіз және келесі кезеңге өттіңіз!`;
+    } else {
+        resultText.textContent = `❌ Сіз тек ${correctAnswers}/5 дұрыс жауап бердіңіз. Ойыннан шығарылдыңыз.`;
     }
+
+    // Ойыншыны "ойнап қойғандар" қатарына қосу
+    let playerName = localStorage.getItem("playerName");
+    if (playerName) {
+        let playedPlayers = JSON.parse(localStorage.getItem("playedPlayers")) || [];
+        if (!playedPlayers.includes(playerName)) {
+            playedPlayers.push(playerName);
+            localStorage.setItem("playedPlayers", JSON.stringify(playedPlayers));
+        }
+    }
+
+    trueButton.style.display = "none";
+    falseButton.style.display = "none";
+    gameOver = true;
+}
 
     trueButton.addEventListener("click", () => checkAnswer("true"));
     falseButton.addEventListener("click", () => checkAnswer("false"));
