@@ -37,15 +37,22 @@
     </div>
 
     <script>
- function registerPlayer() {
+function registerPlayer() {
     let playerName = prompt("Атыңызды енгізіңіз:");
     if (playerName && playerName.trim() !== "") {
+        let playedPlayers = JSON.parse(localStorage.getItem("playedPlayers")) || [];
+
+        // Егер ойыншы бұрын ойнаған болса, оған қайта ойнауға тыйым салынады
+        if (playedPlayers.includes(playerName)) {
+            alert("⚠️ Кешіріңіз, сіз бұл ойынды бұрын ойнадыңыз.");
+            return;
+        }
+
         localStorage.setItem("playerName", playerName);
 
         let players = JSON.parse(localStorage.getItem("players")) || [];
-        
-        // Тексеру: Егер бұл ойыншы бұрыннан бар болса, қайтадан қоспау
         let existingPlayer = players.find(player => player.name === playerName);
+        
         if (!existingPlayer) {
             players.push({ name: playerName, status: "Күтуде ⏳" });
             localStorage.setItem("players", JSON.stringify(players));
@@ -57,6 +64,7 @@
         alert("Атыңызды дұрыс енгізіңіз!");
     }
 }
+
 
         
         function adminLogin() {
