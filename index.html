@@ -1,32 +1,29 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="kk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Squid Game: Иммунология</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; }
-        #players-list { list-style: none; padding: 0; }
-        #players-list li { padding: 5px; font-size: 18px; }
-        #game-area { margin-top: 20px; }
-    </style>
+    <title>Squid Game Immunology</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="register">
+        <h1>Ойынға тіркелу</h1>
+        <input type="text" id="playerName" placeholder="Атыңды енгіз">
+        <button onclick="registerPlayer()">Тіркелу</button>
+    </div>
 
-    <h1>Squid Game: Иммунология</h1>
+    <div id="game" style="display: none;">
+        <h1>Ойын басталды!</h1>
+        <p id="task">Сіздің тапсырмаңыз...</p>
+        <button onclick="submitAnswer()">Жауап беру</button>
+    </div>
 
-    <h2>Ойыншылар</h2>
-    <ul id="players-list"></ul>
-
-    <h2 id="task">Тапсырма: </h2>
-
-    <p id="timer">Қалған уақыт: 30 секунд</p>
-
-    <div id="game-area">
+    <div id="admin" style="display: none;">
+        <h1>Админ панелі</h1>
         <button onclick="startGame()">Ойынды бастау</button>
-        <button onclick="showTask()">Тапсырманы көрсету</button>
-        <button onclick="nextStageWithTask()">Келесі кезең</button>
-        <button onclick="endGame()">Ойынды аяқтау</button>
+        <ul id="playerList"></ul>
     </div>
 
     <script src="script.js"></script>
