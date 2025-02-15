@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const playersList = document.getElementById("players-list");
     const startRound1Button = document.getElementById("start-round1-btn");
     const startRound2Button = document.getElementById("start-round2-btn");
-    const stopGameButton = document.getElementById("stop-game-btn"); // ❗ Ойын тоқтату батырмасы
+    const stopGameButton = document.getElementById("stop-game-btn"); // 🛑 Ойын тоқтату батырмасы
 
     function loadPlayers() {
         let players = JSON.parse(localStorage.getItem("players")) || [];
@@ -39,12 +39,13 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem("gameStatus", "round1_started");
 
         alert("✅ Бірінші раунд басталды! Ойыншылар енді кіре алады.");
-        loadPlayers();
+        window.location.reload(); // 🌟 Бетті жаңарту
     });
 
     // ✅ Екінші раундты бастау
     startRound2Button.addEventListener("click", function () {
-        let winners = JSON.parse(localStorage.getItem("winners_round1")) || [];
+        let players = JSON.parse(localStorage.getItem("players")) || [];
+        let winners = players.filter(player => player.status === "Келесі раунд ✔️"); // ✅ Жеңімпаздарды таңдау
 
         if (winners.length === 0) {
             alert("❌ Екінші раундқа өтетін ойыншылар жоқ!");
@@ -57,12 +58,11 @@ document.addEventListener("DOMContentLoaded", function () {
             status: "Екінші раунд 🎯"
         }));
         localStorage.setItem("players", JSON.stringify(winners));
-
-        // ✅ Ойыншыларды екінші ойынға жіберу
+        localStorage.setItem("winners_round1", JSON.stringify(winners)); // ✅ Жеңімпаздарды сақтаймыз
         localStorage.setItem("gameStatus", "round2_started");
 
         alert("✅ Екінші раунд басталды! Жеңімпаздар ойынды бастай алады.");
-        loadPlayers();
+        window.location.reload(); // 🌟 Бетті жаңарту
     });
 
     // 🚨 **ОЙЫНДЫ ТОҚТАТУ (ТАБЛИЦАНЫ ТАЗАЛАУ)** 🚨
@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.removeItem("gameStatus");
 
         alert("🛑 Ойын тоқтатылды! Барлық ойыншылар тізімі өшірілді.");
-        loadPlayers(); // Кестені жаңарту
+        window.location.reload(); // 🌟 Бетті жаңарту
     });
 
     loadPlayers();
