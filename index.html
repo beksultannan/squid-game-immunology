@@ -37,21 +37,27 @@
     </div>
 
     <script>
-    function registerPlayer() {
+ function registerPlayer() {
     let playerName = prompt("Атыңызды енгізіңіз:");
-    if (playerName) {
+    if (playerName && playerName.trim() !== "") {
         localStorage.setItem("playerName", playerName);
-        
-        // Ойыншылар тізімін жаңарту
+
         let players = JSON.parse(localStorage.getItem("players")) || [];
-        players.push({ name: playerName, status: "Күтуде ⏳" });
-        localStorage.setItem("players", JSON.stringify(players));
+        
+        // Тексеру: Егер бұл ойыншы бұрыннан бар болса, қайтадан қоспау
+        let existingPlayer = players.find(player => player.name === playerName);
+        if (!existingPlayer) {
+            players.push({ name: playerName, status: "Күтуде ⏳" });
+            localStorage.setItem("players", JSON.stringify(players));
+        }
 
         alert("Тіркелдіңіз: " + playerName);
-                // Ойын емес, күту парағына жібереді
-                window.location.href = "waiting.html";
-            }
-        }
+        window.location.href = "waiting.html";
+    } else {
+        alert("Атыңызды дұрыс енгізіңіз!");
+    }
+}
+
         
         function adminLogin() {
             let password = prompt("Админ құпия сөзін енгізіңіз:");
