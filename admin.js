@@ -42,28 +42,33 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location.reload(); // 🌟 Бетті жаңарту
     });
 
-    // ✅ Екінші раундты бастау
-    startRound2Button.addEventListener("click", function () {
-        let players = JSON.parse(localStorage.getItem("players")) || [];
-        let winners = players.filter(player => player.status === "Келесі раунд ✔️"); // ✅ Жеңімпаздарды таңдау
+   // ✅ Екінші раундты бастау (ТҮЗЕТІЛГЕН)
+startRound2Button.addEventListener("click", function () {
+    let players = JSON.parse(localStorage.getItem("players")) || [];
 
-        if (winners.length === 0) {
-            alert("❌ Екінші раундқа өтетін ойыншылар жоқ!");
-            return;
-        }
+    // **"Келесі раунд ✔️" статусы барларды таңдау**
+    let winners = players.filter(player => player.status === "Келесі раунд ✔️");
 
-        // Жеңімпаздарға екінші раунд басталды деген белгі қою
-        winners = winners.map(player => ({
-            ...player,
-            status: "Екінші раунд 🎯"
-        }));
-        localStorage.setItem("players", JSON.stringify(winners));
-        localStorage.setItem("winners_round1", JSON.stringify(winners)); // ✅ Жеңімпаздарды сақтаймыз
-        localStorage.setItem("gameStatus", "round2_started");
+    if (winners.length === 0) {
+        alert("❌ Екінші раундқа өтетін ойыншылар жоқ!");
+        return;
+    }
 
-        alert("✅ Екінші раунд басталды! Жеңімпаздар ойынды бастай алады.");
-        window.location.reload(); // 🌟 Бетті жаңарту
-    });
+    // **Жеңімпаздардың статусын "Екінші раунд 🎯" деп өзгерту**
+    winners = winners.map(player => ({
+        ...player,
+        status: "Екінші раунд 🎯"
+    }));
+
+    // **Жаңа жеңімпаздар тізімін сақтау**
+    localStorage.setItem("players", JSON.stringify(winners));
+    localStorage.setItem("winners_round1", JSON.stringify(winners)); // 🔹 Жеңімпаздарды бөлек сақтау
+    localStorage.setItem("gameStatus", "round2_started");
+
+    alert("✅ Екінші раунд басталды! Жеңімпаздар ойынды бастай алады.");
+    window.location.reload(); // 🌟 Бетті жаңарту
+});
+
 
     // 🚨 **ОЙЫНДЫ ТОҚТАТУ (ТАБЛИЦАНЫ ТАЗАЛАУ)** 🚨
     stopGameButton.addEventListener("click", function () {
