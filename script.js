@@ -5,12 +5,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const startGameBtn = document.getElementById('start-game-btn');
   const registrationDiv = document.getElementById('registration');
   const startSection = document.getElementById('start-section');
-  const qrDisplay = document.getElementById('qr-display');
+  const qrScannerDiv = document.getElementById('qr-scanner');
   const backgroundMusic = document.getElementById('background-music');
 
   let players = [];
 
-  // Тіркелу
+  // Тіркелу: Ойыншы аты енгізіліп, тіркеледі.
   registerBtn.addEventListener('click', () => {
     const name = playerNameInput.value.trim();
     if (name === '') {
@@ -22,15 +22,15 @@ document.addEventListener('DOMContentLoaded', () => {
     alert(`${name} тіркелді!`);
     registrationDiv.classList.add('hidden');
     startSection.classList.remove('hidden');
-    // Фондық музыканы ойнату (браузер рұқсаттарына байланысты)
+    // Фондық музыканы ойнату (браузердің рұқсаттарына байланысты)
     backgroundMusic.play().catch(err => console.log("Музыка ойнатылмады:", err));
   });
 
-  // Ойынды бастау батырмасы басылғанда QR код шығару
+  // "Ойынды бастау" батырмасы басылғанда QR код сканері көрсетіледі.
   startGameBtn.addEventListener('click', () => {
     startSection.classList.add('hidden');
-    qrDisplay.classList.remove('hidden');
-    generateQRCode();
+    qrScannerDiv.classList.remove('hidden');
+    startQRScanner();
   });
 
   function updatePlayersList() {
@@ -42,19 +42,31 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // QR код генерациялау функциясы
-  function generateQRCode() {
-    // Тапсырмалар бетіне арналған URL-ді tasks.html деп өзгертіңіз
-    const tasksUrl = "https://beksultannan.github.io/squid-game-immunology/tasks.html";
-    const qrcodeContainer = document.getElementById("qrcode");
-    qrcodeContainer.innerHTML = ""; // Алдыңғы QR кодты тазалау
-    new QRCode(qrcodeContainer, {
-      text: tasksUrl,
-      width: 250,
-      height: 250,
-      colorDark : "#ffffff",
-      colorLight : "#111111",
-      correctLevel : QRCode.CorrectLevel.H
-    });
+  // QR код сканерін іске қосу функциясы
+  function startQRScanner() {
+    const onScanSuccess = (decodedText, decodedResult) => {
+      console.log("QR код оқылды: ", decodedText);
+      // Егер QR код ішінде URL болса (мысалы, tasks.html), автоматты түрде сол бетке бағыттаймыз.
+      if (decodedText.startsWith("http")) {
+        window.location.href = decodedText;
+      } else {
+        alert("QR код деректері жарамсыз: " + decodedText);
+      }
+      // Сканерді тоқтату
+      html5QrcodeScanner.clear().catch(err => console.log("Сканерді тоқтата алмады:", err));
+    };
+
+    const onScanFailure = error => {
+      console.warn(`QR код оқылмады: ${error}`);
+    };
+
+    let html5QrcodeScanner = new Html5Qrcode("qr-reader");
+    const config = { fps: 10, qrbox: 250 };
+
+    html5QrcodeScanner.start({ facingMode: "environment" }, config, onScanSuccess, onScanFailure)
+      .catch(err => {
+        console.error("QR сканерді іске қосу қатесі:", err);
+        alert("Камера іске қосылмады. Камера рұқсатын тексеріңіз.");
+      });
   }
 });
