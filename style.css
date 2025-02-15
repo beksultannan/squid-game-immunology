@@ -27,6 +27,7 @@ body {
   padding-top: 100px;
 }
 
+/* Тіркелу формасы, ойыншылар тізімі, т.б. */
 #registration, #players-table, #start-section, #qr-scanner {
   margin: 20px auto;
 }
@@ -60,8 +61,48 @@ button:hover {
   display: none;
 }
 
+#players-table ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#players-table li {
+  margin: 5px;
+}
+
+/* QR код стилі */
 #qr-reader {
   margin-top: 20px;
   border: 2px solid #fff;
   padding: 10px;
+}
+
+/* Анимациялар */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+}
+
+.delay-1 {
+  animation-delay: 0.5s;
+}
+
+.delay-2 {
+  animation-delay: 1s;
+}
+
+.delay-3 {
+  animation-delay: 1.5s;
+}
+
+.delay-4 {
+  animation-delay: 2s;
+}
+
+.delay-5 {
+  animation-delay: 2.5s;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
 }
