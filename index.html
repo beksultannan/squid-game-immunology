@@ -40,9 +40,17 @@
         function registerPlayer() {
             let playerName = prompt("Атыңызды енгізіңіз:");
             if (playerName) {
+                let players = JSON.parse(localStorage.getItem("players")) || [];
+                if (!players.includes(playerName)) {
+                    players.push(playerName);
+                    localStorage.setItem("players", JSON.stringify(players));
+                }
+
                 localStorage.setItem("playerName", playerName);
                 alert("Тіркелдіңіз: " + playerName);
-                window.location.href = "game.html";
+                
+                // Ойын емес, күту парағына жібереді
+                window.location.href = "waiting.html";
             }
         }
         
