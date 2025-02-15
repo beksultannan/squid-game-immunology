@@ -42,9 +42,9 @@ function registerPlayer() {
     if (playerName && playerName.trim() !== "") {
         let playedPlayers = JSON.parse(localStorage.getItem("playedPlayers")) || [];
 
-        // Егер ойыншы бұрын ойнаған болса, оған қайта ойнауға тыйым салынады
+        // Егер ойыншы бұрын ойнаған болса, қайта ойнауға тыйым салынады
         if (playedPlayers.includes(playerName)) {
-            alert("⚠️ Кешіріңіз, сіз бұл ойынды бұрын ойнадыңыз.");
+            alert("⚠️ Сіз бұл ойынды бұрын ойнадыңыз! Қайта кіруге рұқсат жоқ.");
             return;
         }
 
@@ -64,7 +64,6 @@ function registerPlayer() {
         alert("Атыңызды дұрыс енгізіңіз!");
     }
 }
-
 
         
         function adminLogin() {
