@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    function checkResult() {
+function checkResult() {
     if (correctAnswers >= 2) {
         resultText.textContent = `🔥 Құттықтаймыз! Сіз ${correctAnswers}/5 дұрыс жауап бердіңіз және келесі кезеңге өттіңіз!`;
     } else {
@@ -61,6 +61,11 @@ document.addEventListener("DOMContentLoaded", function () {
     trueButton.style.display = "none";
     falseButton.style.display = "none";
     gameOver = true;
+
+    // Ойынды аяқтағаннан кейін автоматты түрде басты бетке жібереді
+    setTimeout(() => {
+        window.location.href = "index.html";
+    }, 3000);
 }
 
     trueButton.addEventListener("click", () => checkAnswer("true"));
