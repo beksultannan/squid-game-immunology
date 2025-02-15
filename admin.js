@@ -1,36 +1,34 @@
-document.addEventListener("DOMContentLoaded", function() {
-    let players = JSON.parse(localStorage.getItem("players")) || [];
-    let playersTable = document.getElementById("players-list");
+document.addEventListener("DOMContentLoaded", function () {
+    const playersList = document.getElementById("players-list");
+    const startRound2Button = document.getElementById("start-round2-btn");
 
-    if (players.length === 0) {
-        playersTable.innerHTML = "<tr><td colspan='3'>Ойыншылар жоқ</td></tr>";
-        return;
+    function loadPlayers() {
+        let players = JSON.parse(localStorage.getItem("players")) || [];
+        playersList.innerHTML = "";
+
+        players.forEach((player, index) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${player.name || "Белгісіз"}</td>
+                <td>${player.status}</td>
+            `;
+            playersList.appendChild(row);
+        });
     }
 
-    playersTable.innerHTML = ""; // Кестені тазалау
+    startRound2Button.addEventListener("click", function () {
+        let winners = JSON.parse(localStorage.getItem("winners")) || [];
 
-    players.forEach((player, index) => {
-        let row = `<tr>
-            <td>${index + 1}</td>
-            <td>${player.name || "Белгісіз"}</td>
-            <td>${player.status || "Күтуде ⏳"}</td>
-        </tr>`;
-        playersTable.innerHTML += row;
+        if (winners.length === 0) {
+            alert("Екінші раундқа өтетін ойыншылар жоқ!");
+            return;
+        }
+
+        localStorage.setItem("round2Players", JSON.stringify(winners));
+        alert("Екінші раунд басталды! Ойыншылар автоматты түрде жіберілді.");
+        window.location.href = "game2.html";
     });
+
+    loadPlayers();
 });
-
-
-function startGame() {
-    localStorage.setItem("gameStatus", "started");
-    alert("Ойын басталды!");
-}
-
-function pauseGame() {
-    localStorage.setItem("gameStatus", "paused");
-    alert("Ойын паузаға қойылды!");
-}
-
-function stopGame() {
-    localStorage.setItem("gameStatus", "stopped");
-    alert("Ойын тоқтатылды!");
-}
