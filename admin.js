@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const playersList = document.getElementById("players-list");
     const startRound1Button = document.getElementById("start-round1-btn");
     const startRound2Button = document.getElementById("start-round2-btn");
+    const stopGameButton = document.getElementById("stop-game-btn"); // ❗ Ойын тоқтату батырмасы
 
     function loadPlayers() {
         let players = JSON.parse(localStorage.getItem("players")) || [];
@@ -18,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // ✅ Бірінші раундты бастау батырмасы (Ойыншыларға бастау белгісін береді)
+    // ✅ Бірінші раундты бастау
     startRound1Button.addEventListener("click", function () {
         let players = JSON.parse(localStorage.getItem("players")) || [];
 
@@ -27,21 +28,21 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // Ойыншыларға раунд басталғанын белгілеу
+        // Ойыншыларға "Ойын басталды" деген статус беру
         players = players.map(player => ({
             ...player,
             status: "Ойын басталды 🎮"
         }));
         localStorage.setItem("players", JSON.stringify(players));
 
-        // ✅ Ойыншыларды бірінші ойынға жіберу
+        // ✅ Ойыншыларды бірінші ойынға автоматты түрде жіберу
         localStorage.setItem("gameStatus", "round1_started");
 
         alert("✅ Бірінші раунд басталды! Ойыншылар енді кіре алады.");
         loadPlayers();
     });
 
-    // ✅ Екінші раундты бастау батырмасы
+    // ✅ Екінші раундты бастау
     startRound2Button.addEventListener("click", function () {
         let winners = JSON.parse(localStorage.getItem("winners_round1")) || [];
 
@@ -50,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // Ойыншыларға раунд басталғанын белгілеу
+        // Жеңімпаздарға екінші раунд басталды деген белгі қою
         winners = winners.map(player => ({
             ...player,
             status: "Екінші раунд 🎯"
@@ -62,6 +63,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
         alert("✅ Екінші раунд басталды! Жеңімпаздар ойынды бастай алады.");
         loadPlayers();
+    });
+
+    // 🚨 **ОЙЫНДЫ ТОҚТАТУ (ТАБЛИЦАНЫ ТАЗАЛАУ)** 🚨
+    stopGameButton.addEventListener("click", function () {
+        if (!confirm("⚠️ Барлық деректер өшіріледі. Ойынды тоқтатқыңыз келе ме?")) {
+            return;
+        }
+
+        // ✅ Ойыншылар тізімін тазалау
+        localStorage.removeItem("players");
+
+        // ✅ Жеңімпаздар тізімін тазалау
+        localStorage.removeItem("winners_round1");
+
+        // ✅ Ойын статусын тазалау
+        localStorage.removeItem("gameStatus");
+
+        alert("🛑 Ойын тоқтатылды! Барлық ойыншылар тізімі өшірілді.");
+        loadPlayers(); // Кестені жаңарту
     });
 
     loadPlayers();
