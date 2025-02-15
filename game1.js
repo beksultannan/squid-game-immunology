@@ -2,9 +2,9 @@ document.addEventListener("DOMContentLoaded", function () {
     let currentRound = localStorage.getItem("currentRound") || "round1";
 
     if (currentRound === "round2") {
-        startRound2(); // Егер 2-раунд басталса, оның сұрақтарын жүктеу
+        startRound2();
     } else {
-        startRound1(); // Бірінші раундты бастау
+        startRound1();
     }
 });
 
@@ -17,7 +17,7 @@ function startRound1() {
         { question: "Жедел қабылдамау трансплантациядан кейін бірнеше жыл өткенде дамиды.", correct: false }
     ];
 
-    loadQuestions(questionsRound1);
+    loadQuestions(questionsRound1, "round1");
 }
 
 function startRound2() {
@@ -27,10 +27,10 @@ function startRound2() {
         { question: "Ксенотрансплантация дегеніміз не?", options: ["Өз тінін басқа бөлікке ауыстыру", "Басқа адамнан мүшені алу", "Жануардан адамға трансплантациялау"], correct: 2 }
     ];
 
-    loadQuestions(questionsRound2);
+    loadQuestions(questionsRound2, "round2");
 }
 
-function loadQuestions(questions) {
+function loadQuestions(questions, round) {
     let currentQuestionIndex = 0;
     let correctAnswers = 0;
     let gameOver = false;
@@ -45,7 +45,6 @@ function loadQuestions(questions) {
             let question = questions[currentQuestionIndex];
 
             if (question.options) {
-                // Көп нұсқалы сұрақтар (2-раунд)
                 questionText.innerHTML = `
                     <p>${question.question}</p>
                     ${question.options.map((opt, index) => 
@@ -62,7 +61,6 @@ function loadQuestions(questions) {
                 trueButton.style.display = "none";
                 falseButton.style.display = "none";
             } else {
-                // True/False сұрақтар (1-раунд)
                 questionText.textContent = question.question;
                 trueButton.style.display = "inline-block";
                 falseButton.style.display = "inline-block";
@@ -94,19 +92,38 @@ function loadQuestions(questions) {
     }
 
     function checkResult() {
-        let currentRound = localStorage.getItem("currentRound");
+        let players = JSON.parse(localStorage.getItem("players")) || [];
+        let playerName = localStorage.getItem("currentPlayer");
 
         if (correctAnswers >= 2) {
             resultText.textContent = `🔥 Құттықтаймыз! Сіз ${correctAnswers}/${questions.length} дұрыс жауап бердіңіз!`;
 
-            if (currentRound === "round1") {
+            if (round === "round1") {
                 localStorage.setItem("currentRound", "round2");
+                players = players.map(player => {
+                    if (player.name === playerName) {
+                        return { ...player, status: "Келесі раунд ✔️" };
+                    }
+                    return player;
+                });
+
+                localStorage.setItem("players", JSON.stringify(players));
+
                 setTimeout(() => window.location.reload(), 3000);
             } else {
                 resultText.textContent += " 🏆 Сіз ойынды жеңіп алдыңыз!";
             }
         } else {
             resultText.textContent = `❌ Сіз тек ${correctAnswers}/${questions.length} дұрыс жауап бердіңіз. Ойыннан шығарылдыңыз.`;
+
+            players = players.map(player => {
+                if (player.name === playerName) {
+                    return { ...player, status: "Жеңілді ❌" };
+                }
+                return player;
+            });
+
+            localStorage.setItem("players", JSON.stringify(players));
         }
 
         trueButton.style.display = "none";
