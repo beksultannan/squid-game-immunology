@@ -8,16 +8,20 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-function startRound1() {
-    const questionsRound1 = [
-        { question: "1902 жылы Ullman алғаш рет адамның бүйрегін трансплантациялады.", answer: "false" },
-        { question: "Трансплантацияның сәттілігі донор мен реципиенттің иммунологиялық сәйкестігіне байланысты.", answer: "true" },
-        { question: "Ксенотрансплантация – бір түрге жататын, бірақ генетикалық әртүрлі екі адам арасында мүшелерді алмастыру.", answer: "false" },
-        { question: "HLA-антигендері трансплантацияның қабылдануына тікелей әсер етеді.", answer: "true" },
-        { question: "Жедел қабылдамау трансплантациядан кейін бірнеше жыл өткенде дамиды.", answer: "false" }
-    ];
-    
-    loadQuestions(questionsRound1);
+function finishRound1(playerName, correctAnswers) {
+    let players = JSON.parse(localStorage.getItem("players")) || [];
+
+    players = players.map(player => {
+        if (player.name === playerName) {
+            return {
+                ...player,
+                status: correctAnswers >= 3 ? "Келесі раунд ✔️" : "Жеңілді ❌"
+            };
+        }
+        return player;
+    });
+
+    localStorage.setItem("players", JSON.stringify(players));
 }
 
 function startRound2() {
