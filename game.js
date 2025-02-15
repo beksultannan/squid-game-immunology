@@ -41,30 +41,35 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    function checkResult() {
-        const playerName = localStorage.getItem("playerName");
-        let players = JSON.parse(localStorage.getItem("players")) || [];
+  function checkResult() {
+    const playerName = localStorage.getItem("playerName");
+    let players = JSON.parse(localStorage.getItem("players")) || [];
 
-        if (correctAnswers >= 2) {
-            resultText.textContent = `🔥 Құттықтаймыз! Сіз ${correctAnswers}/5 дұрыс жауап бердіңіз және келесі кезеңге өттіңіз!`;
+    if (correctAnswers >= 2) {
+        resultText.textContent = `🔥 Құттықтаймыз! Сіз ${correctAnswers}/5 дұрыс жауап бердіңіз және келесі кезеңге өттіңіз!`;
 
-            // Ойыншыны жеңімпаздар тізіміне қосу
-            let winners = JSON.parse(localStorage.getItem("winners")) || [];
-            winners.push(playerName);
-            localStorage.setItem("winners", JSON.stringify(winners));
+        // Бірінші раунд жеңімпаздарын сақтау
+        let winners = JSON.parse(localStorage.getItem("winners_round1")) || [];
+        winners.push(playerName);
+        localStorage.setItem("winners_round1", JSON.stringify(winners));
 
-            // Статусты жаңарту
-            players = players.map(player =>
-                player.name === playerName ? { ...player, status: "Келесі кезеңге өтті ✅" } : player
-            );
-        } else {
-            resultText.textContent = `❌ Сіз тек ${correctAnswers}/5 дұрыс жауап бердіңіз. Ойыннан шығарылдыңыз.`;
-            
-            // Статусты жаңарту (ойыннан шығарылды)
-            players = players.map(player =>
-                player.name === playerName ? { ...player, status: "Шығарылды ❌" } : player
-            );
-        }
+        players = players.map(player =>
+            player.name === playerName ? { ...player, status: "Келесі кезеңге өтті ✅" } : player
+        );
+    } else {
+        resultText.textContent = `❌ Сіз тек ${correctAnswers}/5 дұрыс жауап бердіңіз. Ойыннан шығарылдыңыз.`;
+        
+        players = players.map(player =>
+            player.name === playerName ? { ...player, status: "Шығарылды ❌" } : player
+        );
+    }
+
+    localStorage.setItem("players", JSON.stringify(players));
+    trueButton.style.display = "none";
+    falseButton.style.display = "none";
+    gameOver = true;
+}
+
 
         localStorage.setItem("players", JSON.stringify(players));
 
