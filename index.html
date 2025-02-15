@@ -1,31 +1,59 @@
-<!-- index.html -->
 <!DOCTYPE html>
-<html lang="kk">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Squid Game Immunology</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: black;
+            color: white;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .btn {
+            padding: 15px 30px;
+            font-size: 18px;
+            color: white;
+            background-color: red;
+            border: none;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .btn:hover {
+            background-color: darkred;
+        }
+    </style>
 </head>
 <body>
-    <div id="register">
-        <h1>Ойынға тіркелу</h1>
-        <input type="text" id="playerName" placeholder="Атыңды енгіз">
-        <button onclick="registerPlayer()">Тіркелу</button>
+    <div class="container">
+        <h1>Squid Game Immunology</h1>
+        <p>Ойынға қатысу үшін тіркеліңіз немесе админ ретінде кіріңіз.</p>
+        <button class="btn" onclick="registerPlayer()">Тіркелу</button>
+        <button class="btn" onclick="adminLogin()">Админ Кіру</button>
     </div>
 
-    <div id="game" style="display: none;">
-        <h1>Ойын басталды!</h1>
-        <p id="task">Сіздің тапсырмаңыз...</p>
-        <button onclick="submitAnswer()">Жауап беру</button>
-    </div>
-
-    <div id="admin" style="display: none;">
-        <h1>Админ панелі</h1>
-        <button onclick="startGame()">Ойынды бастау</button>
-        <ul id="playerList"></ul>
-    </div>
-
-    <script src="script.js"></script>
+    <script>
+        function registerPlayer() {
+            let playerName = prompt("Атыңызды енгізіңіз:");
+            if (playerName) {
+                localStorage.setItem("playerName", playerName);
+                alert("Тіркелдіңіз: " + playerName);
+                window.location.href = "game.html";
+            }
+        }
+        
+        function adminLogin() {
+            let password = prompt("Админ құпия сөзін енгізіңіз:");
+            if (password === "admin123") {
+                window.location.href = "admin.html";
+            } else {
+                alert("Қате құпия сөз!");
+            }
+        }
+    </script>
 </body>
 </html>
