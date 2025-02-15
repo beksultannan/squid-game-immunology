@@ -20,6 +20,26 @@ function startRound1() {
     loadQuestions(questionsRound1, "round1");
 }
 
+function finishRound1(playerName, correctAnswers) {
+    let players = JSON.parse(localStorage.getItem("players")) || [];
+    let winners = [];
+
+    players = players.map(player => {
+        if (player.name === playerName) {
+            let newStatus = correctAnswers >= 3 ? "Келесі раунд ✔️" : "Жеңілді ❌";
+            if (correctAnswers >= 3) winners.push({ name: playerName, status: "Келесі раунд ✔️" });
+            return { ...player, status: newStatus };
+        }
+        return player;
+    });
+
+    localStorage.setItem("players", JSON.stringify(players));
+    localStorage.setItem("winners_round1", JSON.stringify(winners));
+
+    console.log("✅ Бірінші раунд аяқталды. Жеңімпаздар:", winners);
+}
+
+
 function startRound2() {
     const questionsRound2 = [
         { question: "Аутотрансплантация дегеніміз не?", options: ["Өз тінін басқа бөлікке ауыстыру", "Басқа адамнан мүшені алу", "Жануардан адамға трансплантациялау"], correct: 0 },
