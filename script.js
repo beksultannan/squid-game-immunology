@@ -8,21 +8,28 @@ document.addEventListener('DOMContentLoaded', () => {
   const qrScannerDiv = document.getElementById('qr-scanner');
   const backgroundMusic = document.getElementById('background-music');
 
-  let players = [];
+  // localStorage-те сақталған ойыншыларды оқу
+  let players = JSON.parse(localStorage.getItem("players")) || [];
 
-  // Тіркелу: Ойыншы аты енгізіліп, тіркеледі.
+  updatePlayersList();
+
+  // Тіркелу
   registerBtn.addEventListener('click', () => {
     const name = playerNameInput.value.trim();
     if (name === '') {
       alert('Атыңызды енгізіңіз!');
       return;
     }
-    players.push(name);
+    // Бірегей ID генерациясы (уақыт белгісі негізінде)
+    const playerId = 'player-' + Date.now();
+    const playerObj = { id: playerId, name: name };
+    players.push(playerObj);
+    localStorage.setItem("players", JSON.stringify(players));
     updatePlayersList();
     alert(`${name} тіркелді!`);
     registrationDiv.classList.add('hidden');
     startSection.classList.remove('hidden');
-    // Фондық музыканы ойнату (браузердің рұқсаттарына байланысты)
+    // Фондық музыканы ойнату
     backgroundMusic.play().catch(err => console.log("Музыка ойнатылмады:", err));
   });
 
@@ -34,10 +41,12 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   function updatePlayersList() {
+    // localStorage-тегі ойыншыларды оқимыз
+    let storedPlayers = JSON.parse(localStorage.getItem("players")) || [];
     playersList.innerHTML = '';
-    players.forEach(player => {
+    storedPlayers.forEach(player => {
       const li = document.createElement('li');
-      li.textContent = player;
+      li.textContent = `${player.name} (${player.id})`;
       playersList.appendChild(li);
     });
   }
@@ -46,13 +55,11 @@ document.addEventListener('DOMContentLoaded', () => {
   function startQRScanner() {
     const onScanSuccess = (decodedText, decodedResult) => {
       console.log("QR код оқылды: ", decodedText);
-      // Егер QR код ішінде URL болса (мысалы, tasks.html), автоматты түрде сол бетке бағыттаймыз.
       if (decodedText.startsWith("http")) {
         window.location.href = decodedText;
       } else {
         alert("QR код деректері жарамсыз: " + decodedText);
       }
-      // Сканерді тоқтату
       html5QrcodeScanner.clear().catch(err => console.log("Сканерді тоқтата алмады:", err));
     };
 
