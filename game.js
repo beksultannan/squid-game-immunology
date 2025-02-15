@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const questions = [
+    let questions = [
         { question: "1902 жылы Ullman алғаш рет адамның бүйрегін трансплантациялады.", answer: "false" },
         { question: "Трансплантацияның сәттілігі донор мен реципиенттің иммунологиялық сәйкестігіне байланысты.", answer: "true" },
         { question: "Ксенотрансплантация – бір түрге жататын, бірақ генетикалық әртүрлі екі адам арасында мүшелерді алмастыру.", answer: "false" },
@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", function () {
     let currentQuestionIndex = 0;
     let correctAnswers = 0;
     let gameOver = false;
-    let playerName = localStorage.getItem("playerName");
 
     const questionText = document.getElementById("question-text");
     const trueButton = document.getElementById("true-btn");
@@ -42,26 +41,23 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-  function checkResult() {
-    let status = correctAnswers >= 2 ? "Келесі кезеңге өтті ✅" : "Шығарылды ❌";
-    
-    resultText.textContent = correctAnswers >= 2 
-        ? `🔥 Құттықтаймыз! Сіз ${correctAnswers}/5 дұрыс жауап бердіңіз және келесі кезеңге өттіңіз!` 
-        : `❌ Сіз тек ${correctAnswers}/5 дұрыс жауап бердіңіз. Ойыннан шығарылдыңыз.`;
+    function checkResult() {
+        let status = correctAnswers >= 2 ? "Келесі кезеңге өтті ✅" : "Шығарылды ❌";
+        
+        let players = JSON.parse(localStorage.getItem("players")) || [];
+        let playerName = localStorage.getItem("playerName");
 
-    trueButton.style.display = "none";
-    falseButton.style.display = "none";
-    gameOver = true;
+        let updatedPlayers = players.map(player => 
+            player.name === playerName ? { ...player, status: status } : player
+        );
 
-    // Ойыншы статусын жаңарту
-    let players = JSON.parse(localStorage.getItem("players")) || [];
-    let updatedPlayers = players.map(player => 
-        player.name === playerName ? { ...player, status: status } : player
-    );
+        localStorage.setItem("players", JSON.stringify(updatedPlayers));
 
-    localStorage.setItem("players", JSON.stringify(updatedPlayers));
-}
-
+        resultText.textContent = status;
+        trueButton.style.display = "none";
+        falseButton.style.display = "none";
+        gameOver = true;
+    }
 
     trueButton.addEventListener("click", () => checkAnswer("true"));
     falseButton.addEventListener("click", () => checkAnswer("false"));
