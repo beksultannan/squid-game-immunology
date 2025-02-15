@@ -27,6 +27,16 @@ body {
   padding-top: 100px;
 }
 
+input[type="text"] {
+  padding: 10px;
+  font-size: 18px;
+  margin: 10px;
+  border: 2px solid white;
+  border-radius: 5px;
+  background: transparent;
+  color: white;
+}
+
 button {
   padding: 10px 20px;
   font-size: 18px;
@@ -42,20 +52,14 @@ button:hover {
   transform: scale(1.1);
 }
 
-input[type="text"] {
-  padding: 10px;
-  font-size: 18px;
-  margin: 10px;
-  border: 2px solid white;
-  border-radius: 5px;
-  background: transparent;
-  color: white;
-}
-
 .hidden {
   display: none;
 }
 
-#qr-reader {
-  margin-top: 20px;
+#qrcode {
+  width: 200px;
+  height: 200px;
+  margin: 20px auto;
+  border: 2px solid #fff;
+  padding: 10px;
 }
