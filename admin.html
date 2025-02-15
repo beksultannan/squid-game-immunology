@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
+    <title>Админ панелі</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,52 +11,72 @@
             background-color: black;
             color: white;
         }
-        .container {
-            margin-top: 50px;
-        }
-        .btn {
-            padding: 15px 30px;
-            font-size: 18px;
-            color: white;
-            background-color: red;
-            border: none;
-            cursor: pointer;
-            margin: 10px;
-        }
-        .btn:hover {
-            background-color: darkred;
-        }
         table {
             width: 80%;
-            margin: 20px auto;
+            margin: auto;
             border-collapse: collapse;
         }
         th, td {
-            padding: 10px;
             border: 1px solid white;
+            padding: 10px;
+        }
+        .btn {
+            padding: 10px 20px;
+            margin: 10px;
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Admin Panel</h1>
-        <button class="btn" onclick="startGame()">Ойынды бастау</button>
-        <button class="btn" onclick="pauseGame()">Пауза</button>
-        <button class="btn" onclick="stopGame()">Ойынды тоқтату</button>
+    <h1>Админ панелі</h1>
+    <button class="btn" onclick="startGame()">Ойынды бастау</button>
+    <button class="btn" onclick="resetGame()">Ойынды тоқтату</button>
+    
+    <h2>Тіркелген ойыншылар</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Аты</th>
+                <th>Статус</th>
+            </tr>
+        </thead>
+        <tbody id="players-list"></tbody>
+    </table>
 
-        <h2>Тіркелген ойыншылар</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Аты</th>
-                    <th>Статус</th>
-                </tr>
-            </thead>
-            <tbody id="players-list"></tbody>
-        </table>
-    </div>
+    <script>
+        function loadPlayers() {
+            let players = JSON.parse(localStorage.getItem("players")) || [];
+            let playersTable = document.getElementById("players-list");
 
-    <script src="admin.js"></script>
+            playersTable.innerHTML = ""; // Кестені тазалау
+
+            players.forEach((player, index) => {
+                let row = `<tr>
+                    <td>${index + 1}</td>
+                    <td>${player.name || "Белгісіз"}</td>
+                    <td>${player.status || "Күтуде ⏳"}</td>
+                </tr>`;
+                playersTable.innerHTML += row;
+            });
+        }
+
+        function startGame() {
+            localStorage.setItem("gameStarted", "true");
+            alert("Ойын басталды!");
+        }
+
+        function resetGame() {
+            localStorage.removeItem("gameStarted");
+            localStorage.removeItem("players");
+            alert("Ойын тоқтатылды!");
+            window.location.reload();
+        }
+
+        loadPlayers();
+    </script>
 </body>
 </html>
