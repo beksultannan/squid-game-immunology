@@ -43,16 +43,26 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
    // ✅ Екінші раундты бастау (ТҮЗЕТІЛГЕН)
-startRound2Button.addEventListener("click", function () {
-    let players = JSON.parse(localStorage.getItem("players")) || [];
-
-    // **"Келесі раунд ✔️" статусы барларды таңдау**
-    let winners = players.filter(player => player.status === "Келесі раунд ✔️");
+document.getElementById("start-round2-btn").addEventListener("click", function () {
+    let winners = JSON.parse(localStorage.getItem("winners_round1")) || [];
 
     if (winners.length === 0) {
         alert("❌ Екінші раундқа өтетін ойыншылар жоқ!");
         return;
     }
+
+    winners = winners.map(player => ({
+        ...player,
+        status: "Екінші раунд 🎯"
+    }));
+
+    localStorage.setItem("players", JSON.stringify(winners));
+    localStorage.setItem("currentRound", "round2"); // 🔥 Екінші раундты іске қосу
+
+    alert("✅ Екінші раунд басталды! Жеңімпаздар ойынды бастай алады.");
+    window.location.reload(); // Ойыншыларға жаңа бет жүктеу
+});
+
 
     // **Жеңімпаздардың статусын "Екінші раунд 🎯" деп өзгерту**
     winners = winners.map(player => ({
