@@ -18,14 +18,20 @@
     <p>Админ ойынды бастағанда сіз автоматты түрде ойынға кіресіз.</p>
 
     <script>
-        function checkGameStart() {
-            let gameStarted = localStorage.getItem("gameStarted");
-            if (gameStarted === "true") {
-                window.location.href = "game.html";
-            }
-        }
+        document.addEventListener("DOMContentLoaded", function () {
+    function checkGameStatus() {
+        let gameStatus = localStorage.getItem("gameStatus");
 
-        setInterval(checkGameStart, 3000); // Әр 3 секунд сайын тексереді
+        if (gameStatus === "round1_started") {
+            window.location.href = "game.html";
+        } else if (gameStatus === "round2_started") {
+            window.location.href = "game2.html";
+        }
+    }
+
+    setInterval(checkGameStatus, 2000); // ✅ Ойын басталғанын 2 секунд сайын тексереді
+});
+
     </script>
 </body>
 </html>
