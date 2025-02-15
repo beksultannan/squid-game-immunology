@@ -1,37 +1,30 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const playerList = document.getElementById("player-list");
-    const startGameBtn = document.getElementById("start-game-btn");
-    const resultsDiv = document.getElementById("results");
+document.addEventListener("DOMContentLoaded", loadPlayers);
 
-    function loadPlayers() {
-        let players = JSON.parse(localStorage.getItem("players")) || [];
-        playerList.innerHTML = "";
+function loadPlayers() {
+    let players = JSON.parse(localStorage.getItem("players")) || [];
+    let playersTable = document.getElementById("players-list");
+    playersTable.innerHTML = "";
+    players.forEach((player, index) => {
+        let row = `<tr>
+            <td>${index + 1}</td>
+            <td>${player.name}</td>
+            <td>${player.status}</td>
+        </tr>`;
+        playersTable.innerHTML += row;
+    });
+}
 
-        players.forEach(player => {
-            let li = document.createElement("li");
-            li.textContent = player;
-            playerList.appendChild(li);
-        });
-    }
+function startGame() {
+    localStorage.setItem("gameStatus", "started");
+    alert("Ойын басталды!");
+}
 
-    function startGame() {
-        localStorage.setItem("gameStarted", "true");
-        alert("🟢 Ойын басталды! Ойыншылар енді сұрақтарға жауап бере алады.");
-    }
+function pauseGame() {
+    localStorage.setItem("gameStatus", "paused");
+    alert("Ойын паузаға қойылды!");
+}
 
-    function loadResults() {
-        let results = JSON.parse(localStorage.getItem("results")) || {};
-        resultsDiv.innerHTML = "<h3>Ойын нәтижелері:</h3>";
-
-        for (let player in results) {
-            let p = document.createElement("p");
-            p.textContent = `${player}: ${results[player]} дұрыс жауап`;
-            resultsDiv.appendChild(p);
-        }
-    }
-
-    startGameBtn.addEventListener("click", startGame);
-    
-    loadPlayers();
-    loadResults();
-});
+function stopGame() {
+    localStorage.setItem("gameStatus", "stopped");
+    alert("Ойын тоқтатылды!");
+}
