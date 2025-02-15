@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Squid Game: Immunology</title>
   <link rel="stylesheet" href="styles.css">
-  <!-- QRCode.js кітапханасы тек QR код шығару үшін -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <!-- HTML5 QR Code кітапханасы (камера сканері үшін) -->
+  <script src="https://unpkg.com/html5-qrcode@2.3.7" type="text/javascript"></script>
   <script src="script.js" defer></script>
 </head>
 <body>
@@ -40,13 +40,13 @@
     
     <!-- Ойынды бастау бөлімі (тіркелгеннен кейін) -->
     <div id="start-section" class="hidden">
-      <button id="start-game-btn">Ойынды бастау</button>
+      <button id="start-game-btn">Ойынды бастау (QR код сканері)</button>
     </div>
     
-    <!-- QR код шығару аймағы -->
-    <div id="qr-display" class="hidden">
-      <h2>QR кодты сканерлеңіз, тапсырмалар бетіне өтіңіз</h2>
-      <div id="qrcode"></div>
+    <!-- QR код сканері аймағы -->
+    <div id="qr-scanner" class="hidden">
+      <h2>QR кодты сканерлеңіз</h2>
+      <div id="qr-reader" style="width:300px; margin: 0 auto;"></div>
     </div>
   </div>
 </body>
